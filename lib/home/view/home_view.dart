@@ -1,5 +1,5 @@
+import 'package:cansat_interface/home/home.dart';
 import 'package:fluent_ui/fluent_ui.dart';
-import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -39,132 +39,16 @@ class FirstRowWidgets extends StatelessWidget {
       child: Center(
         child: Row(
           children: const [
-            HumidityCard(),
+            HumidityCard(
+              humidity: 65,
+            ),
             SizedBox(width: 20),
-            PressureCard(),
+            PressureCard(
+              pressure: 800,
+            ),
             SizedBox(width: 20),
-            TemperatureCard(),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class TemperatureCard extends StatelessWidget {
-  const TemperatureCard({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: Card(
-        borderRadius: BorderRadius.circular(10),
-        child: Column(
-          children: [
-            DefaultTextStyle(
-              style: FluentTheme.of(context).typography.bodyLarge!.copyWith(
-                    fontWeight: FontWeight.w500,
-                  ),
-              child: const Text('Temperatura'),
-            ),
-            const SizedBox(height: 10),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class PressureCard extends StatelessWidget {
-  const PressureCard({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: Card(
-        borderRadius: BorderRadius.circular(10),
-        child: Column(
-          children: [
-            DefaultTextStyle(
-              style: FluentTheme.of(context).typography.bodyLarge!.copyWith(
-                    fontWeight: FontWeight.w500,
-                  ),
-              child: const Text('Presión'),
-            ),
-            const SizedBox(height: 10),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class HumidityCard extends StatelessWidget {
-  const HumidityCard({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: Card(
-        borderRadius: BorderRadius.circular(10),
-        child: Column(
-          children: [
-            DefaultTextStyle(
-              style: FluentTheme.of(context).typography.bodyLarge!.copyWith(
-                    fontWeight: FontWeight.w500,
-                  ),
-              child: const Text('Humedad'),
-            ),
-            const SizedBox(height: 10),
-            Expanded(
-              child: SizedBox(
-                height: double.infinity,
-                child: SfLinearGauge(
-                  interval: 10,
-                  minorTicksPerInterval: 5,
-                  axisTrackExtent: 30,
-                  axisTrackStyle: const LinearAxisTrackStyle(
-                    thickness: 30,
-                    borderWidth: 1,
-                    edgeStyle: LinearEdgeStyle.bothCurve,
-                  ),
-                  tickPosition: LinearElementPosition.cross,
-                  labelPosition: LinearLabelPosition.outside,
-                  orientation: LinearGaugeOrientation.vertical,
-                  markerPointers: const [
-                    LinearWidgetPointer(
-                      markerAlignment: LinearMarkerAlignment.end,
-                      value: 100,
-                      position: LinearElementPosition.inside,
-                      offset: 10,
-                      child: SizedBox(
-                        height: 30,
-                        child: Text(
-                          '%',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                  barPointers: const [
-                    LinearBarPointer(
-                      value: 45,
-                      animationDuration: 500,
-                      thickness: 25,
-                      color: Color(0xff0074E3),
-                    )
-                  ],
-                ),
-              ),
+            TemperatureCard(
+              temperature: 30,
             ),
           ],
         ),
