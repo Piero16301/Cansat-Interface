@@ -17,6 +17,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   intl: ^0.17.0
+  mqtt_client: ^9.7.4
   syncfusion_flutter_core: ^20.4.50
   syncfusion_flutter_gauges: ^20.4.50
 
@@ -31,4 +32,17 @@ flutter:
   uses-material-design: true
   generate: true
   assets:
-    - assets/
+    - assets/images/
+  fonts:
+    - family: Roboto-Bold
+      fonts:
+        - asset: assets/fonts/RobotoMono-Bold.ttf
+    - family: Roboto-Medium
+      fonts:
+        - asset: assets/fonts/RobotoMono-Medium.ttf
+    - family: Roboto-Regular
+      fonts:
+        - asset: assets/fonts/RobotoMono-Regular.ttf
+    - family: Roboto-Thin
+      fonts:
+        - asset: assets/fonts/RobotoMono-Thin.ttf

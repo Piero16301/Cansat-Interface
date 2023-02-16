@@ -2,21 +2,92 @@ part of 'home_cubit.dart';
 
 class HomeState extends Equatable {
   const HomeState({
-    this.paneIndex = 0,
+    this.isReadingMQTT = false,
+    this.humidity = 0,
+    this.pressure = 0,
+    this.temperature = 0,
+    this.accelerationX = 0,
+    this.accelerationY = 0,
+    this.accelerationZ = 0,
+    this.gyroscopeX = 0,
+    this.gyroscopeY = 0,
+    this.gyroscopeZ = 0,
+    this.broker = '',
+    this.port = 0,
+    this.clientID = '',
+    this.topic = '',
   });
 
-  final int paneIndex;
+  final bool isReadingMQTT;
+
+  // Sensor BME280
+  final double humidity;
+  final double pressure;
+  final double temperature;
+
+  // Sensor MPU6050
+  final double accelerationX;
+  final double accelerationY;
+  final double accelerationZ;
+  final double gyroscopeX;
+  final double gyroscopeY;
+  final double gyroscopeZ;
+
+  // MQTT variables
+  final String broker;
+  final int port;
+  final String clientID;
+  final String topic;
 
   HomeState copyWith({
-    int? paneIndex,
+    bool? isReadingMQTT,
+    double? humidity,
+    double? pressure,
+    double? temperature,
+    double? accelerationX,
+    double? accelerationY,
+    double? accelerationZ,
+    double? gyroscopeX,
+    double? gyroscopeY,
+    double? gyroscopeZ,
+    String? broker,
+    int? port,
+    String? clientID,
+    String? topic,
   }) {
     return HomeState(
-      paneIndex: paneIndex ?? this.paneIndex,
+      isReadingMQTT: isReadingMQTT ?? this.isReadingMQTT,
+      humidity: humidity ?? this.humidity,
+      pressure: pressure ?? this.pressure,
+      temperature: temperature ?? this.temperature,
+      accelerationX: accelerationX ?? this.accelerationX,
+      accelerationY: accelerationY ?? this.accelerationY,
+      accelerationZ: accelerationZ ?? this.accelerationZ,
+      gyroscopeX: gyroscopeX ?? this.gyroscopeX,
+      gyroscopeY: gyroscopeY ?? this.gyroscopeY,
+      gyroscopeZ: gyroscopeZ ?? this.gyroscopeZ,
+      broker: broker ?? this.broker,
+      port: port ?? this.port,
+      clientID: clientID ?? this.clientID,
+      topic: topic ?? this.topic,
     );
   }
 
   @override
   List<Object> get props => [
-        paneIndex,
+        isReadingMQTT,
+        humidity,
+        pressure,
+        temperature,
+        accelerationX,
+        accelerationY,
+        accelerationZ,
+        gyroscopeX,
+        gyroscopeY,
+        gyroscopeZ,
+        broker,
+        port,
+        clientID,
+        topic,
       ];
 }

@@ -76,7 +76,7 @@ class HumidityCard extends StatelessWidget {
                           SizedBox.square(
                             dimension: 16,
                             child: Image.asset(
-                              'assets/triangle_pointer.png',
+                              'assets/images/triangle_pointer.png',
                               color: const Color(0xff0074E3),
                             ),
                           ),
@@ -97,7 +97,7 @@ class HumidityCard extends StatelessWidget {
                       value: humidity,
                       animationDuration: 250,
                       thickness: 40,
-                      color: const Color(0xff0074E3),
+                      color: const Color(0xff0074E3).withOpacity(0.7),
                     )
                   ],
                 ),

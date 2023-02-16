@@ -47,7 +47,7 @@ class TemperatureCard extends StatelessWidget {
                           startWidth: 0.265,
                           sizeUnit: GaugeSizeUnit.factor,
                           endWidth: 0.265,
-                          color: Colors.blue,
+                          color: Colors.blue.withOpacity(0.7),
                         ),
                         GaugeRange(
                           startValue: interval1,
@@ -55,7 +55,7 @@ class TemperatureCard extends StatelessWidget {
                           startWidth: 0.265,
                           sizeUnit: GaugeSizeUnit.factor,
                           endWidth: 0.265,
-                          color: Colors.green,
+                          color: Colors.green.withOpacity(0.7),
                         ),
                         GaugeRange(
                           startValue: interval2,
@@ -63,7 +63,7 @@ class TemperatureCard extends StatelessWidget {
                           startWidth: 0.265,
                           sizeUnit: GaugeSizeUnit.factor,
                           endWidth: 0.265,
-                          color: Colors.red,
+                          color: Colors.red.withOpacity(0.7),
                         ),
                       ],
                       annotations: <GaugeAnnotation>[
