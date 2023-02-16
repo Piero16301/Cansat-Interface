@@ -1,0 +1,32 @@
+name: cansat_interface
+description: CANSAT Interface App
+version: 1.0.0+1
+publish_to: none
+
+environment:
+  sdk: ">=2.19.0 <3.0.0"
+  flutter: 3.7.3
+
+dependencies:
+  bloc: ^8.1.1
+  equatable: ^2.0.5
+  fluent_ui: ^4.3.0
+  flutter:
+    sdk: flutter
+  flutter_bloc: ^8.1.2
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.17.0
+  syncfusion_flutter_core: ^20.4.50
+  syncfusion_flutter_gauges: ^20.4.50
+
+dev_dependencies:
+  bloc_test: ^9.1.1
+  flutter_test:
+    sdk: flutter
+  mocktail: ^0.3.0
+  very_good_analysis: ^4.0.0
+
+flutter:
+  uses-material-design: true
+  generate: true
