@@ -21,6 +21,7 @@ dependencies:
   mqtt_client: ^9.7.4
   syncfusion_flutter_core: ^20.4.50
   syncfusion_flutter_gauges: ^20.4.50
+  vector_math: ^2.1.4
 
 dev_dependencies:
   bloc_test: ^9.1.1
