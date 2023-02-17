@@ -9,6 +9,7 @@ environment:
 
 dependencies:
   bloc: ^8.1.1
+  ditredi: ^1.0.3
   equatable: ^2.0.5
   fluent_ui: ^4.3.0
   flutter:

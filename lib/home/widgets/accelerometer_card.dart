@@ -31,7 +31,7 @@ class AccelerometerCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'X: ${x.toStringAsFixed(2)}',
+                    'X: ${x.toStringAsFixed(3)}',
                     style: const TextStyle(
                       fontSize: 18,
                       fontFamily: 'Roboto-Medium',
@@ -39,7 +39,7 @@ class AccelerometerCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    'Y: ${y.toStringAsFixed(2)}',
+                    'Y: ${y.toStringAsFixed(3)}',
                     style: const TextStyle(
                       fontSize: 18,
                       fontFamily: 'Roboto-Medium',
@@ -47,7 +47,7 @@ class AccelerometerCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    'Z: ${z.toStringAsFixed(2)}',
+                    'Z: ${z.toStringAsFixed(3)}',
                     style: const TextStyle(
                       fontSize: 18,
                       fontFamily: 'Roboto-Medium',

@@ -82,7 +82,7 @@ class HumidityCard extends StatelessWidget {
                           ),
                           const SizedBox(width: 5),
                           Text(
-                            humidity.toStringAsFixed(2),
+                            humidity.toStringAsFixed(3),
                             style: const TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w500,

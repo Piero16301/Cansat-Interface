@@ -6,12 +6,12 @@ class HomeState extends Equatable {
     this.humidity = 0,
     this.pressure = 0,
     this.temperature = 0,
-    this.accelerationX = 0,
-    this.accelerationY = 0,
-    this.accelerationZ = 0,
     this.gyroscopeX = 0,
     this.gyroscopeY = 0,
     this.gyroscopeZ = 0,
+    this.accelerationX = 0,
+    this.accelerationY = 0,
+    this.accelerationZ = 0,
     this.broker = '',
     this.port = 0,
     this.clientID = '',
@@ -26,12 +26,12 @@ class HomeState extends Equatable {
   final double temperature;
 
   // Sensor MPU6050
-  final double accelerationX;
-  final double accelerationY;
-  final double accelerationZ;
   final double gyroscopeX;
   final double gyroscopeY;
   final double gyroscopeZ;
+  final double accelerationX;
+  final double accelerationY;
+  final double accelerationZ;
 
   // MQTT variables
   final String broker;
@@ -44,12 +44,12 @@ class HomeState extends Equatable {
     double? humidity,
     double? pressure,
     double? temperature,
-    double? accelerationX,
-    double? accelerationY,
-    double? accelerationZ,
     double? gyroscopeX,
     double? gyroscopeY,
     double? gyroscopeZ,
+    double? accelerationX,
+    double? accelerationY,
+    double? accelerationZ,
     String? broker,
     int? port,
     String? clientID,
@@ -60,12 +60,12 @@ class HomeState extends Equatable {
       humidity: humidity ?? this.humidity,
       pressure: pressure ?? this.pressure,
       temperature: temperature ?? this.temperature,
-      accelerationX: accelerationX ?? this.accelerationX,
-      accelerationY: accelerationY ?? this.accelerationY,
-      accelerationZ: accelerationZ ?? this.accelerationZ,
       gyroscopeX: gyroscopeX ?? this.gyroscopeX,
       gyroscopeY: gyroscopeY ?? this.gyroscopeY,
       gyroscopeZ: gyroscopeZ ?? this.gyroscopeZ,
+      accelerationX: accelerationX ?? this.accelerationX,
+      accelerationY: accelerationY ?? this.accelerationY,
+      accelerationZ: accelerationZ ?? this.accelerationZ,
       broker: broker ?? this.broker,
       port: port ?? this.port,
       clientID: clientID ?? this.clientID,
@@ -79,12 +79,12 @@ class HomeState extends Equatable {
         humidity,
         pressure,
         temperature,
-        accelerationX,
-        accelerationY,
-        accelerationZ,
         gyroscopeX,
         gyroscopeY,
         gyroscopeZ,
+        accelerationX,
+        accelerationY,
+        accelerationZ,
         broker,
         port,
         clientID,

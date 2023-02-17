@@ -39,12 +39,12 @@ class _HomeViewState extends State<HomeView> {
                   ),
                   const SizedBox(height: 20),
                   SecondRowWidgets(
-                    accelerationX: state.accelerationX,
-                    accelerationY: state.accelerationY,
-                    accelerationZ: state.accelerationZ,
                     gyroscopeX: state.gyroscopeX,
                     gyroscopeY: state.gyroscopeY,
                     gyroscopeZ: state.gyroscopeZ,
+                    accelerationX: state.accelerationX,
+                    accelerationY: state.accelerationY,
+                    accelerationZ: state.accelerationZ,
                   ),
                 ],
               ),
@@ -233,21 +233,21 @@ class FirstRowWidgets extends StatelessWidget {
 
 class SecondRowWidgets extends StatelessWidget {
   const SecondRowWidgets({
-    required this.accelerationX,
-    required this.accelerationY,
-    required this.accelerationZ,
     required this.gyroscopeX,
     required this.gyroscopeY,
     required this.gyroscopeZ,
+    required this.accelerationX,
+    required this.accelerationY,
+    required this.accelerationZ,
     super.key,
   });
 
-  final double accelerationX;
-  final double accelerationY;
-  final double accelerationZ;
   final double gyroscopeX;
   final double gyroscopeY;
   final double gyroscopeZ;
+  final double accelerationX;
+  final double accelerationY;
+  final double accelerationZ;
 
   @override
   Widget build(BuildContext context) {

@@ -83,7 +83,7 @@ class PressureCard extends StatelessWidget {
                           ),
                           const SizedBox(width: 5),
                           Text(
-                            pressure.toStringAsFixed(2),
+                            pressure.toStringAsFixed(3),
                             style: const TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w500,
