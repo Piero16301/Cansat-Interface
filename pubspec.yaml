@@ -25,6 +25,7 @@ dependencies:
 
 dev_dependencies:
   bloc_test: ^9.1.1
+  flutter_launcher_icons: ^0.11.0
   flutter_test:
     sdk: flutter
   mocktail: ^0.3.0
@@ -48,3 +49,22 @@ flutter:
     - family: Roboto-Thin
       fonts:
         - asset: assets/fonts/RobotoMono-Thin.ttf
+
+flutter_icons:
+  android: false
+  ios: false
+  image_path: "assets/app_icon.png"
+  web:
+    generate: false
+  windows:
+    generate: true
+    image_path: "assets/app_icon.png"
+    icon_size: 256
+  macos:
+    generate: true
+    image_path: "assets/app_icon.png"
+    icon_size: 256
+  linux:
+    generate: true
+    image_path: "assets/app_icon.png"
+    icon_size: 256
