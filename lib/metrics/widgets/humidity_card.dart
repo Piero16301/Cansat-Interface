@@ -20,7 +20,10 @@ class HumidityCard extends StatelessWidget {
               style: FluentTheme.of(context).typography.bodyLarge!.copyWith(
                     fontWeight: FontWeight.w500,
                   ),
-              child: const Text('Humedad'),
+              child: const Text(
+                'Humedad',
+                style: TextStyle(fontFamily: 'Roboto-Medium'),
+              ),
             ),
             const SizedBox(height: 10),
             Expanded(
@@ -31,7 +34,8 @@ class HumidityCard extends StatelessWidget {
                   minorTicksPerInterval: 10,
                   axisTrackExtent: 10,
                   axisLabelStyle: const TextStyle(
-                    fontSize: 14,
+                    fontSize: 12,
+                    fontFamily: 'Roboto-Medium',
                   ),
                   majorTickStyle: const LinearTickStyle(
                     length: 20,
@@ -41,8 +45,8 @@ class HumidityCard extends StatelessWidget {
                     length: 10,
                   ),
                   axisTrackStyle: const LinearAxisTrackStyle(
-                    thickness: 50,
-                    borderWidth: 4,
+                    thickness: 30,
+                    borderWidth: 2,
                   ),
                   tickPosition: LinearElementPosition.cross,
                   labelPosition: LinearLabelPosition.outside,
@@ -59,8 +63,8 @@ class HumidityCard extends StatelessWidget {
                         child: Text(
                           '%',
                           style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
+                            fontSize: 16,
+                            fontFamily: 'Roboto-Medium',
                           ),
                         ),
                       ),
@@ -74,7 +78,7 @@ class HumidityCard extends StatelessWidget {
                         children: [
                           const SizedBox(width: 5),
                           SizedBox.square(
-                            dimension: 16,
+                            dimension: 14,
                             child: Image.asset(
                               'assets/images/triangle_pointer.png',
                               color: const Color(0xff0074E3),
@@ -84,8 +88,8 @@ class HumidityCard extends StatelessWidget {
                           Text(
                             humidity.toStringAsFixed(3),
                             style: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
+                              fontSize: 12,
+                              fontFamily: 'Roboto-Medium',
                             ),
                           ),
                         ],
@@ -96,7 +100,7 @@ class HumidityCard extends StatelessWidget {
                     LinearBarPointer(
                       value: humidity,
                       animationDuration: 250,
-                      thickness: 40,
+                      thickness: 20,
                       color: const Color(0xff0074E3).withOpacity(0.7),
                     )
                   ],

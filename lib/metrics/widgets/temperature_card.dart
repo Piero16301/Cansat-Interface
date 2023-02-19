@@ -23,7 +23,10 @@ class TemperatureCard extends StatelessWidget {
               style: FluentTheme.of(context).typography.bodyLarge!.copyWith(
                     fontWeight: FontWeight.w500,
                   ),
-              child: const Text('Temperatura'),
+              child: const Text(
+                'Temperatura',
+                style: TextStyle(fontFamily: 'Roboto-Medium'),
+              ),
             ),
             const SizedBox(height: 10),
             Expanded(

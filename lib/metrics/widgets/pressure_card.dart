@@ -20,7 +20,10 @@ class PressureCard extends StatelessWidget {
               style: FluentTheme.of(context).typography.bodyLarge!.copyWith(
                     fontWeight: FontWeight.w500,
                   ),
-              child: const Text('Presión'),
+              child: const Text(
+                'Presión',
+                style: TextStyle(fontFamily: 'Roboto-Medium'),
+              ),
             ),
             const SizedBox(height: 10),
             Expanded(
@@ -32,7 +35,8 @@ class PressureCard extends StatelessWidget {
                   minorTicksPerInterval: 10,
                   axisTrackExtent: 10,
                   axisLabelStyle: const TextStyle(
-                    fontSize: 14,
+                    fontSize: 12,
+                    fontFamily: 'Roboto-Medium',
                   ),
                   majorTickStyle: const LinearTickStyle(
                     length: 20,
@@ -42,8 +46,8 @@ class PressureCard extends StatelessWidget {
                     length: 10,
                   ),
                   axisTrackStyle: const LinearAxisTrackStyle(
-                    thickness: 50,
-                    borderWidth: 4,
+                    thickness: 30,
+                    borderWidth: 2,
                   ),
                   tickPosition: LinearElementPosition.cross,
                   labelPosition: LinearLabelPosition.outside,
@@ -61,7 +65,7 @@ class PressureCard extends StatelessWidget {
                           'mmHg',
                           style: TextStyle(
                             fontSize: 16,
-                            fontWeight: FontWeight.w500,
+                            fontFamily: 'Roboto-Medium',
                           ),
                         ),
                       ),
@@ -75,7 +79,7 @@ class PressureCard extends StatelessWidget {
                         children: [
                           const SizedBox(width: 5),
                           SizedBox.square(
-                            dimension: 16,
+                            dimension: 14,
                             child: Image.asset(
                               'assets/images/triangle_pointer.png',
                               color: const Color(0xff0074E3),
@@ -85,8 +89,8 @@ class PressureCard extends StatelessWidget {
                           Text(
                             pressure.toStringAsFixed(3),
                             style: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
+                              fontSize: 12,
+                              fontFamily: 'Roboto-Medium',
                             ),
                           ),
                         ],
@@ -97,7 +101,7 @@ class PressureCard extends StatelessWidget {
                     LinearBarPointer(
                       value: pressure,
                       animationDuration: 250,
-                      thickness: 40,
+                      thickness: 20,
                       color: const Color(0xff0074E3).withOpacity(0.7),
                     )
                   ],

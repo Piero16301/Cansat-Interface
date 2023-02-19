@@ -38,7 +38,10 @@ class _GyroscopeCardState extends State<GyroscopeCard> {
               style: FluentTheme.of(context).typography.bodyLarge!.copyWith(
                     fontWeight: FontWeight.w500,
                   ),
-              child: const Text('Giroscopio'),
+              child: const Text(
+                'Giroscopio',
+                style: TextStyle(fontFamily: 'Roboto-Medium'),
+              ),
             ),
             const SizedBox(height: 10),
             Expanded(

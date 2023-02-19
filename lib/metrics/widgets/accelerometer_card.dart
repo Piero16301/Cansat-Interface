@@ -23,7 +23,10 @@ class AccelerometerCard extends StatelessWidget {
               style: FluentTheme.of(context).typography.bodyLarge!.copyWith(
                     fontWeight: FontWeight.w500,
                   ),
-              child: const Text('Acelerómetro'),
+              child: const Text(
+                'Acelerómetro',
+                style: TextStyle(fontFamily: 'Roboto-Medium'),
+              ),
             ),
             const SizedBox(height: 10),
             Expanded(
