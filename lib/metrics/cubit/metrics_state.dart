@@ -4,6 +4,7 @@ class MetricsState extends Equatable {
   const MetricsState({
     this.isReadingMQTT = false,
     this.humidity = 0,
+    this.humidityData = const <double>[],
     this.pressure = 0,
     this.temperature = 0,
     this.gyroscopeX = 0,
@@ -22,6 +23,7 @@ class MetricsState extends Equatable {
 
   // Sensor BME280
   final double humidity;
+  final List<double> humidityData;
   final double pressure;
   final double temperature;
 
@@ -42,6 +44,7 @@ class MetricsState extends Equatable {
   MetricsState copyWith({
     bool? isReadingMQTT,
     double? humidity,
+    List<double>? humidityData,
     double? pressure,
     double? temperature,
     double? gyroscopeX,
@@ -58,6 +61,7 @@ class MetricsState extends Equatable {
     return MetricsState(
       isReadingMQTT: isReadingMQTT ?? this.isReadingMQTT,
       humidity: humidity ?? this.humidity,
+      humidityData: humidityData ?? this.humidityData,
       pressure: pressure ?? this.pressure,
       temperature: temperature ?? this.temperature,
       gyroscopeX: gyroscopeX ?? this.gyroscopeX,
@@ -77,6 +81,7 @@ class MetricsState extends Equatable {
   List<Object> get props => [
         isReadingMQTT,
         humidity,
+        humidityData,
         pressure,
         temperature,
         gyroscopeX,

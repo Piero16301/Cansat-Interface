@@ -27,6 +27,7 @@ class MetricsCubit extends Cubit<MetricsState> {
       state.copyWith(
         isReadingMQTT: value,
         humidity: !value ? 0 : state.humidity,
+        humidityData: !value ? [] : state.humidityData,
         pressure: !value ? 0 : state.pressure,
         temperature: !value ? 0 : state.temperature,
         gyroscopeX: !value ? 0 : state.gyroscopeX,
@@ -44,6 +45,10 @@ class MetricsCubit extends Cubit<MetricsState> {
     emit(
       state.copyWith(
         humidity: double.parse(data[0]), // Humidity
+        humidityData: [
+          ...state.humidityData,
+          double.parse(data[0]),
+        ], // Humidity Data
         pressure: double.parse(data[1]), // Pressure
         temperature: double.parse(data[2]), // Temperature
         gyroscopeX: double.parse(data[3]), // Gyroscope X
