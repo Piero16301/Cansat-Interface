@@ -12,7 +12,7 @@ class App extends StatelessWidget {
       theme: FluentThemeData.dark(),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      home: const CounterPage(),
+      home: const HomePage(),
     );
   }
 }
