@@ -6,7 +6,9 @@ class MetricsState extends Equatable {
     this.humidity = 0,
     this.humidityData = const <double>[],
     this.pressure = 0,
+    this.pressureData = const <double>[],
     this.temperature = 0,
+    this.temperatureData = const <double>[],
     this.gyroscopeX = 0,
     this.gyroscopeY = 0,
     this.gyroscopeZ = 0,
@@ -25,7 +27,9 @@ class MetricsState extends Equatable {
   final double humidity;
   final List<double> humidityData;
   final double pressure;
+  final List<double> pressureData;
   final double temperature;
+  final List<double> temperatureData;
 
   // Sensor MPU6050
   final double gyroscopeX;
@@ -46,7 +50,9 @@ class MetricsState extends Equatable {
     double? humidity,
     List<double>? humidityData,
     double? pressure,
+    List<double>? pressureData,
     double? temperature,
+    List<double>? temperatureData,
     double? gyroscopeX,
     double? gyroscopeY,
     double? gyroscopeZ,
@@ -63,7 +69,9 @@ class MetricsState extends Equatable {
       humidity: humidity ?? this.humidity,
       humidityData: humidityData ?? this.humidityData,
       pressure: pressure ?? this.pressure,
+      pressureData: pressureData ?? this.pressureData,
       temperature: temperature ?? this.temperature,
+      temperatureData: temperatureData ?? this.temperatureData,
       gyroscopeX: gyroscopeX ?? this.gyroscopeX,
       gyroscopeY: gyroscopeY ?? this.gyroscopeY,
       gyroscopeZ: gyroscopeZ ?? this.gyroscopeZ,
@@ -83,7 +91,9 @@ class MetricsState extends Equatable {
         humidity,
         humidityData,
         pressure,
+        pressureData,
         temperature,
+        temperatureData,
         gyroscopeX,
         gyroscopeY,
         gyroscopeZ,

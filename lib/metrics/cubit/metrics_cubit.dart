@@ -26,16 +26,18 @@ class MetricsCubit extends Cubit<MetricsState> {
     emit(
       state.copyWith(
         isReadingMQTT: value,
-        humidity: !value ? 0 : state.humidity,
-        humidityData: !value ? [] : state.humidityData,
-        pressure: !value ? 0 : state.pressure,
-        temperature: !value ? 0 : state.temperature,
-        gyroscopeX: !value ? 0 : state.gyroscopeX,
-        gyroscopeY: !value ? 0 : state.gyroscopeY,
-        gyroscopeZ: !value ? 0 : state.gyroscopeZ,
-        accelerationX: !value ? 0 : state.accelerationX,
-        accelerationY: !value ? 0 : state.accelerationY,
-        accelerationZ: !value ? 0 : state.accelerationZ,
+        humidity: value ? 0 : state.humidity,
+        humidityData: value ? [] : state.humidityData,
+        pressure: value ? 0 : state.pressure,
+        pressureData: value ? [] : state.pressureData,
+        temperature: value ? 0 : state.temperature,
+        temperatureData: value ? [] : state.temperatureData,
+        gyroscopeX: value ? 0 : state.gyroscopeX,
+        gyroscopeY: value ? 0 : state.gyroscopeY,
+        gyroscopeZ: value ? 0 : state.gyroscopeZ,
+        accelerationX: value ? 0 : state.accelerationX,
+        accelerationY: value ? 0 : state.accelerationY,
+        accelerationZ: value ? 0 : state.accelerationZ,
       ),
     );
   }
@@ -50,7 +52,15 @@ class MetricsCubit extends Cubit<MetricsState> {
           double.parse(data[0]),
         ], // Humidity Data
         pressure: double.parse(data[1]), // Pressure
+        pressureData: [
+          ...state.pressureData,
+          double.parse(data[1]),
+        ], // Pressure Data
         temperature: double.parse(data[2]), // Temperature
+        temperatureData: [
+          ...state.temperatureData,
+          double.parse(data[2]),
+        ], // Temperature Data
         gyroscopeX: double.parse(data[3]), // Gyroscope X
         gyroscopeY: double.parse(data[4]), // Gyroscope Y
         gyroscopeZ: double.parse(data[5]), // Gyroscope Z

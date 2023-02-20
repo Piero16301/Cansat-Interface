@@ -35,6 +35,7 @@ class _MetricsViewState extends State<MetricsView> {
                   humidity: state.humidity,
                   humidityData: state.humidityData,
                   pressure: state.pressure,
+                  pressureData: state.pressureData,
                   temperature: state.temperature,
                 ),
                 const SizedBox(height: 20),
@@ -199,6 +200,7 @@ class FirstRowWidgets extends StatelessWidget {
     required this.humidity,
     required this.humidityData,
     required this.pressure,
+    required this.pressureData,
     required this.temperature,
     super.key,
   });
@@ -206,6 +208,7 @@ class FirstRowWidgets extends StatelessWidget {
   final double humidity;
   final List<double> humidityData;
   final double pressure;
+  final List<double> pressureData;
   final double temperature;
 
   @override
@@ -221,6 +224,7 @@ class FirstRowWidgets extends StatelessWidget {
             const SizedBox(width: 20),
             PressureCard(
               pressure: pressure,
+              pressureData: pressureData,
             ),
             const SizedBox(width: 20),
             TemperatureCard(

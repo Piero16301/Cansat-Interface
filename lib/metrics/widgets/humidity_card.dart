@@ -28,18 +28,17 @@ class HumidityCard extends StatelessWidget {
                 style: TextStyle(fontFamily: 'Roboto-Medium'),
               ),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 20),
             Expanded(
               child: SizedBox(
                 height: double.infinity,
                 child: Row(
                   children: [
                     Expanded(
-                      flex: 3,
                       child: HumidityChart(humidityData: humidityData),
                     ),
-                    Expanded(
-                      flex: 2,
+                    const SizedBox(width: 10),
+                    SizedBox(
                       child: HumidityBarIndicator(humidity: humidity),
                     ),
                   ],
@@ -66,40 +65,56 @@ class HumidityChart extends StatelessWidget {
     return SfCartesianChart(
       plotAreaBorderWidth: 0,
       primaryXAxis: NumericAxis(
-        majorGridLines: const MajorGridLines(width: 0),
-        // minorGridLines: const MinorGridLines(width: 0),
-        axisLine: const AxisLine(width: 0),
-        labelStyle: const TextStyle(
-          fontSize: 12,
-          fontFamily: 'Roboto-Medium',
-        ),
-        // majorTickLines: const MajorTickLines(size: 0),
-        // minorTickLines: const MinorTickLines(size: 0),
-      ),
-      primaryYAxis: NumericAxis(
-        majorGridLines: const MajorGridLines(width: 0),
         minorGridLines: const MinorGridLines(width: 0),
         axisLine: const AxisLine(width: 0),
         labelStyle: const TextStyle(
           fontSize: 12,
           fontFamily: 'Roboto-Medium',
         ),
-        majorTickLines: const MajorTickLines(size: 0),
+        minorTickLines: const MinorTickLines(size: 0),
+        title: AxisTitle(
+          text: 'Tiempo (s)',
+          textStyle: const TextStyle(fontSize: 12, fontFamily: 'Roboto-Medium'),
+        ),
+      ),
+      primaryYAxis: NumericAxis(
+        minorGridLines: const MinorGridLines(width: 0),
+        axisLine: const AxisLine(width: 0),
+        labelStyle: const TextStyle(
+          fontSize: 12,
+          fontFamily: 'Roboto-Medium',
+        ),
         minorTickLines: const MinorTickLines(size: 0),
         minimum: 0,
         maximum: 100,
+        title: AxisTitle(
+          text: 'Humedad (%)',
+          textStyle: const TextStyle(fontSize: 12, fontFamily: 'Roboto-Medium'),
+        ),
       ),
       series: [
         SplineSeries<double, double>(
           dataSource: humidityData,
           markerSettings: const MarkerSettings(isVisible: true),
-          xValueMapper: (double humidity, _) =>
-              humidityData.indexOf(humidity).toDouble(),
+          xValueMapper: (_, int index) => index.toDouble(),
           yValueMapper: (double humidity, _) => humidity,
           color: const Color(0xff0074E3),
           width: 2,
+          splineType: SplineType.cardinal,
         ),
       ],
+      tooltipBehavior: TooltipBehavior(
+        enable: true,
+        header: '',
+        canShowMarker: false,
+        format: 'point.y',
+        decimalPlaces: 1,
+        animationDuration: 250,
+        textStyle: const TextStyle(
+          fontSize: 10,
+          fontFamily: 'Roboto-Medium',
+        ),
+      ),
     );
   }
 }
@@ -170,11 +185,14 @@ class HumidityBarIndicator extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 5),
-              Text(
-                humidity.toStringAsFixed(3),
-                style: const TextStyle(
-                  fontSize: 12,
-                  fontFamily: 'Roboto-Medium',
+              RotatedBox(
+                quarterTurns: 1,
+                child: Text(
+                  humidity.toStringAsFixed(3),
+                  style: const TextStyle(
+                    fontSize: 12,
+                    fontFamily: 'Roboto-Medium',
+                  ),
                 ),
               ),
             ],
