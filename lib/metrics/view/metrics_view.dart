@@ -37,6 +37,7 @@ class _MetricsViewState extends State<MetricsView> {
                   pressure: state.pressure,
                   pressureData: state.pressureData,
                   temperature: state.temperature,
+                  temperatureData: state.temperatureData,
                 ),
                 const SizedBox(height: 20),
                 SecondRowWidgets(
@@ -202,6 +203,7 @@ class FirstRowWidgets extends StatelessWidget {
     required this.pressure,
     required this.pressureData,
     required this.temperature,
+    required this.temperatureData,
     super.key,
   });
 
@@ -210,6 +212,7 @@ class FirstRowWidgets extends StatelessWidget {
   final double pressure;
   final List<double> pressureData;
   final double temperature;
+  final List<double> temperatureData;
 
   @override
   Widget build(BuildContext context) {
@@ -229,6 +232,7 @@ class FirstRowWidgets extends StatelessWidget {
             const SizedBox(width: 20),
             TemperatureCard(
               temperature: temperature,
+              temperatureData: temperatureData,
             ),
           ],
         ),

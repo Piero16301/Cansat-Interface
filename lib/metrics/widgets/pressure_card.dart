@@ -28,7 +28,7 @@ class PressureCard extends StatelessWidget {
                 style: TextStyle(fontFamily: 'Roboto-Medium'),
               ),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 10),
             Expanded(
               child: SizedBox(
                 height: double.infinity,
@@ -37,7 +37,7 @@ class PressureCard extends StatelessWidget {
                     Expanded(
                       child: PressureChart(pressureData: pressureData),
                     ),
-                    const SizedBox(width: 10),
+                    const SizedBox(width: 20),
                     PressureBarIndicator(pressure: pressure),
                   ],
                 ),
@@ -184,11 +184,14 @@ class PressureBarIndicator extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 5),
-              Text(
-                pressure.toStringAsFixed(3),
-                style: const TextStyle(
-                  fontSize: 12,
-                  fontFamily: 'Roboto-Medium',
+              RotatedBox(
+                quarterTurns: 1,
+                child: Text(
+                  pressure.toStringAsFixed(3),
+                  style: const TextStyle(
+                    fontSize: 12,
+                    fontFamily: 'Roboto-Medium',
+                  ),
                 ),
               ),
             ],

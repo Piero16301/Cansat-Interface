@@ -28,7 +28,7 @@ class HumidityCard extends StatelessWidget {
                 style: TextStyle(fontFamily: 'Roboto-Medium'),
               ),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 10),
             Expanded(
               child: SizedBox(
                 height: double.infinity,
@@ -37,7 +37,7 @@ class HumidityCard extends StatelessWidget {
                     Expanded(
                       child: HumidityChart(humidityData: humidityData),
                     ),
-                    const SizedBox(width: 10),
+                    const SizedBox(width: 20),
                     SizedBox(
                       child: HumidityBarIndicator(humidity: humidity),
                     ),
