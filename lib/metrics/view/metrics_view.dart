@@ -22,14 +22,10 @@ class _MetricsViewState extends State<MetricsView> {
   StreamSubscription? subscription;
 
   @override
-  void initState() {
+  Widget build(BuildContext context) {
     context.read<MetricsCubit>().initializeMQTT();
     context.read<MetricsCubit>().load3DModel();
-    super.initState();
-  }
 
-  @override
-  Widget build(BuildContext context) {
     return Stack(
       children: [
         Padding(
@@ -47,12 +43,14 @@ class _MetricsViewState extends State<MetricsView> {
                 ),
                 const SizedBox(height: 20),
                 SecondRowWidgets(
+                  faces: state.faces,
                   gyroscopeX: state.gyroscopeX,
                   gyroscopeY: state.gyroscopeY,
                   gyroscopeZ: state.gyroscopeZ,
                   accelerationX: state.accelerationX,
                   accelerationY: state.accelerationY,
                   accelerationZ: state.accelerationZ,
+                  altitude: state.altitude,
                 ),
               ],
             ),
@@ -249,21 +247,25 @@ class FirstRowWidgets extends StatelessWidget {
 
 class SecondRowWidgets extends StatelessWidget {
   const SecondRowWidgets({
+    required this.faces,
     required this.gyroscopeX,
     required this.gyroscopeY,
     required this.gyroscopeZ,
     required this.accelerationX,
     required this.accelerationY,
     required this.accelerationZ,
+    required this.altitude,
     super.key,
   });
 
+  final List<Face3D> faces;
   final double gyroscopeX;
   final double gyroscopeY;
   final double gyroscopeZ;
   final double accelerationX;
   final double accelerationY;
   final double accelerationZ;
+  final double altitude;
 
   @override
   Widget build(BuildContext context) {
@@ -275,9 +277,8 @@ class SecondRowWidgets extends StatelessWidget {
               x: gyroscopeX,
               y: gyroscopeY,
               z: gyroscopeZ,
-              faces: context.select<MetricsCubit, List<Face3D>>(
-                (cubit) => cubit.state.faces,
-              ),
+              faces: faces,
+              altitude: altitude,
             ),
             const SizedBox(width: 20),
             AccelerometerCard(

@@ -29,6 +29,7 @@ class MetricsState extends Equatable {
     this.accelerationX = 0,
     this.accelerationY = 0,
     this.accelerationZ = 0,
+    this.altitude = 0,
     this.broker = '',
     this.port = 0,
     this.clientID = '',
@@ -54,6 +55,7 @@ class MetricsState extends Equatable {
   final double accelerationX;
   final double accelerationY;
   final double accelerationZ;
+  final double altitude;
 
   // MQTT variables
   final String broker;
@@ -77,6 +79,7 @@ class MetricsState extends Equatable {
     double? accelerationX,
     double? accelerationY,
     double? accelerationZ,
+    double? altitude,
     String? broker,
     int? port,
     String? clientID,
@@ -98,6 +101,7 @@ class MetricsState extends Equatable {
       accelerationX: accelerationX ?? this.accelerationX,
       accelerationY: accelerationY ?? this.accelerationY,
       accelerationZ: accelerationZ ?? this.accelerationZ,
+      altitude: altitude ?? this.altitude,
       broker: broker ?? this.broker,
       port: port ?? this.port,
       clientID: clientID ?? this.clientID,
@@ -122,6 +126,7 @@ class MetricsState extends Equatable {
         accelerationX,
         accelerationY,
         accelerationZ,
+        altitude,
         broker,
         port,
         clientID,

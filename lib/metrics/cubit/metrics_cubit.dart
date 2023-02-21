@@ -22,6 +22,7 @@ class MetricsCubit extends Cubit<MetricsState> {
   }
 
   Future<void> load3DModel() async {
+    if (state.faces.isNotEmpty) return;
     emit(state.copyWith(status: MetricsStatus.loading));
     try {
       final faces = await ObjParser().loadFromResources(
@@ -29,7 +30,7 @@ class MetricsCubit extends Cubit<MetricsState> {
       );
       emit(state.copyWith(status: MetricsStatus.success, faces: faces));
     } catch (e) {
-      emit(state.copyWith(status: MetricsStatus.failure));
+      // emit(state.copyWith(status: MetricsStatus.failure));
     }
   }
 
@@ -49,6 +50,7 @@ class MetricsCubit extends Cubit<MetricsState> {
         accelerationX: value ? 0 : state.accelerationX,
         accelerationY: value ? 0 : state.accelerationY,
         accelerationZ: value ? 0 : state.accelerationZ,
+        altitude: value ? 0 : state.altitude,
       ),
     );
   }
@@ -78,6 +80,7 @@ class MetricsCubit extends Cubit<MetricsState> {
         accelerationX: double.parse(data[6]), // Acceleration X
         accelerationY: double.parse(data[7]), // Acceleration Y
         accelerationZ: double.parse(data[8]), // Acceleration Z
+        altitude: double.parse(data[9]), // Altitude
       ),
     );
   }
