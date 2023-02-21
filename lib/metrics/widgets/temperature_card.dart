@@ -144,7 +144,7 @@ class TemperatureRadialIndicator extends StatelessWidget {
       enableLoadingAnimation: true,
       axes: <RadialAxis>[
         RadialAxis(
-          interval: 5,
+          interval: 10,
           minorTicksPerInterval: 4,
           showAxisLine: false,
           radiusFactor: 0.9,

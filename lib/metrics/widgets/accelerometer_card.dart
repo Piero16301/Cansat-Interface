@@ -63,21 +63,21 @@ class AccelerometerCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Text(
-                  '${x.toStringAsFixed(3)} m/s²',
+                  x.toStringAsFixed(3),
                   style: const TextStyle(
                     fontSize: 18,
                     fontFamily: 'Roboto-Medium',
                   ),
                 ),
                 Text(
-                  '${y.toStringAsFixed(3)} m/s²',
+                  y.toStringAsFixed(3),
                   style: const TextStyle(
                     fontSize: 18,
                     fontFamily: 'Roboto-Medium',
                   ),
                 ),
                 Text(
-                  '${z.toStringAsFixed(3)} m/s²',
+                  z.toStringAsFixed(3),
                   style: const TextStyle(
                     fontSize: 18,
                     fontFamily: 'Roboto-Medium',
@@ -111,7 +111,7 @@ class AccelerometerRadialIndicator extends StatelessWidget {
       enableLoadingAnimation: true,
       axes: <RadialAxis>[
         RadialAxis(
-          interval: 30,
+          interval: 60,
           minorTicksPerInterval: 4,
           showAxisLine: false,
           radiusFactor: 0.9,

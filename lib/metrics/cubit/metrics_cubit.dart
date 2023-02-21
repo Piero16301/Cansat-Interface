@@ -1,23 +1,21 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 part 'metrics_state.dart';
 
 class MetricsCubit extends Cubit<MetricsState> {
-  MetricsCubit() : super(const MetricsState());
+  MetricsCubit(this._preferences) : super(const MetricsState());
+
+  final SharedPreferences _preferences;
 
   void initializeMQTT() {
-    const broker = '192.168.0.11';
-    const port = 1883;
-    const clientID = 'cansat-interface';
-    const topic = 'cansat/telemetry';
-
     emit(
       state.copyWith(
-        broker: broker,
-        port: port,
-        clientID: clientID,
-        topic: topic,
+        broker: _preferences.getString('broker') ?? '',
+        port: _preferences.getInt('port') ?? 0,
+        clientID: _preferences.getString('clientID') ?? '',
+        topic: _preferences.getString('topic') ?? '',
       ),
     );
   }

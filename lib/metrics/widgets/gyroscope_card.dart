@@ -60,21 +60,21 @@ class _GyroscopeCardState extends State<GyroscopeCard> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Text(
-                  'X: ${widget.x.toStringAsFixed(3)} rad/s',
+                  'X: ${widget.x.toStringAsFixed(3)}',
                   style: const TextStyle(
                     fontSize: 16,
                     fontFamily: 'Roboto-Medium',
                   ),
                 ),
                 Text(
-                  'Y: ${widget.y.toStringAsFixed(3)} rad/s',
+                  'Y: ${widget.y.toStringAsFixed(3)}',
                   style: const TextStyle(
                     fontSize: 16,
                     fontFamily: 'Roboto-Medium',
                   ),
                 ),
                 Text(
-                  'Z: ${widget.z.toStringAsFixed(3)} rad/s',
+                  'Z: ${widget.z.toStringAsFixed(3)}',
                   style: const TextStyle(
                     fontSize: 16,
                     fontFamily: 'Roboto-Medium',
