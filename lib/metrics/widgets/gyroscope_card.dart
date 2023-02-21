@@ -27,8 +27,8 @@ class _GyroscopeCardState extends State<GyroscopeCard> {
       rotationX: widget.x,
       rotationY: widget.y,
       rotationZ: widget.z,
-      light: Vector3(-0.5, -0.5, 0.5),
-      ambientLightStrength: 0.3,
+      // light: Vector3(-0.5, -0.5, 0.5),
+      ambientLightStrength: 0.4,
       userScale: 2,
     );
 
