@@ -3,6 +3,7 @@
 import 'dart:async';
 
 import 'package:cansat_interface/metrics/metrics.dart';
+import 'package:ditredi/ditredi.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mqtt_client/mqtt_client.dart' as mqtt;
@@ -21,9 +22,14 @@ class _MetricsViewState extends State<MetricsView> {
   StreamSubscription? subscription;
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
     context.read<MetricsCubit>().initializeMQTT();
+    context.read<MetricsCubit>().load3DModel();
+    super.initState();
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return Stack(
       children: [
         Padding(
@@ -269,6 +275,9 @@ class SecondRowWidgets extends StatelessWidget {
               x: gyroscopeX,
               y: gyroscopeY,
               z: gyroscopeZ,
+              faces: context.select<MetricsCubit, List<Face3D>>(
+                (cubit) => cubit.state.faces,
+              ),
             ),
             const SizedBox(width: 20),
             AccelerometerCard(

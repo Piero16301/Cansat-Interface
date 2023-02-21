@@ -1,7 +1,21 @@
 part of 'metrics_cubit.dart';
 
+enum MetricsStatus {
+  initial,
+  loading,
+  success,
+  failure;
+
+  bool get isInitial => this == MetricsStatus.initial;
+  bool get isLoading => this == MetricsStatus.loading;
+  bool get isSuccess => this == MetricsStatus.success;
+  bool get isFailure => this == MetricsStatus.failure;
+}
+
 class MetricsState extends Equatable {
   const MetricsState({
+    this.status = MetricsStatus.initial,
+    this.faces = const <Face3D>[],
     this.isReadingMQTT = false,
     this.humidity = 0,
     this.humidityData = const <double>[],
@@ -21,6 +35,8 @@ class MetricsState extends Equatable {
     this.topic = '',
   });
 
+  final MetricsStatus status;
+  final List<Face3D> faces;
   final bool isReadingMQTT;
 
   // Sensor BME280
@@ -46,6 +62,8 @@ class MetricsState extends Equatable {
   final String topic;
 
   MetricsState copyWith({
+    MetricsStatus? status,
+    List<Face3D>? faces,
     bool? isReadingMQTT,
     double? humidity,
     List<double>? humidityData,
@@ -65,6 +83,8 @@ class MetricsState extends Equatable {
     String? topic,
   }) {
     return MetricsState(
+      status: status ?? this.status,
+      faces: faces ?? this.faces,
       isReadingMQTT: isReadingMQTT ?? this.isReadingMQTT,
       humidity: humidity ?? this.humidity,
       humidityData: humidityData ?? this.humidityData,
@@ -87,6 +107,8 @@ class MetricsState extends Equatable {
 
   @override
   List<Object> get props => [
+        status,
+        faces,
         isReadingMQTT,
         humidity,
         humidityData,

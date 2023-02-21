@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:ditredi/ditredi.dart';
 import 'package:equatable/equatable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -18,6 +19,18 @@ class MetricsCubit extends Cubit<MetricsState> {
         topic: _preferences.getString('topic') ?? '',
       ),
     );
+  }
+
+  Future<void> load3DModel() async {
+    emit(state.copyWith(status: MetricsStatus.loading));
+    try {
+      final faces = await ObjParser().loadFromResources(
+        'assets/models/CANSAT-Rocket.obj',
+      );
+      emit(state.copyWith(status: MetricsStatus.success, faces: faces));
+    } catch (e) {
+      emit(state.copyWith(status: MetricsStatus.failure));
+    }
   }
 
   void toggleMQTTReading({required bool value}) {

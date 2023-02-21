@@ -7,12 +7,14 @@ class GyroscopeCard extends StatefulWidget {
     required this.x,
     required this.y,
     required this.z,
+    required this.faces,
     super.key,
   });
 
   final double x;
   final double y;
   final double z;
+  final List<Face3D> faces;
 
   @override
   State<GyroscopeCard> createState() => _GyroscopeCardState();
@@ -27,6 +29,7 @@ class _GyroscopeCardState extends State<GyroscopeCard> {
       rotationZ: widget.z,
       light: Vector3(-0.5, -0.5, 0.5),
       ambientLightStrength: 0.3,
+      userScale: 2,
     );
 
     return Expanded(
@@ -45,16 +48,17 @@ class _GyroscopeCardState extends State<GyroscopeCard> {
             ),
             const SizedBox(height: 10),
             Expanded(
-              child: DiTreDi(
-                figures: [
-                  Cube3D(
-                    1,
-                    Vector3(0, 0, 0),
-                    color: const Color(0xff0074E3),
-                  ),
-                ],
-                controller: controller,
-              ),
+              child: widget.faces.isEmpty
+                  ? const SizedBox(
+                      width: double.infinity,
+                      child: Center(child: ProgressRing()),
+                    )
+                  : DiTreDi(
+                      figures: [
+                        Mesh3D(widget.faces),
+                      ],
+                      controller: controller,
+                    ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,

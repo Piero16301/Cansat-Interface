@@ -39,6 +39,7 @@ flutter:
   generate: true
   assets:
     - assets/images/
+    - assets/models/
   fonts:
     - family: Roboto-Bold
       fonts:
