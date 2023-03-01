@@ -14,7 +14,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => HomeCubit(preferences),
+      create: (_) => HomeCubit(),
       child: HomeView(preferences: preferences),
     );
   }

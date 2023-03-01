@@ -40,11 +40,23 @@ class _MetricsViewState extends State<MetricsView> {
               children: [
                 FirstRowWidgets(
                   humidity: state.humidity,
-                  humidityData: state.humidityData,
+                  humidityData: state.humidityData.length < 20
+                      ? state.humidityData
+                      : state.humidityData.sublist(
+                          state.humidityData.length - 20,
+                        ),
                   pressure: state.pressure,
-                  pressureData: state.pressureData,
+                  pressureData: state.pressureData.length < 20
+                      ? state.pressureData
+                      : state.pressureData.sublist(
+                          state.pressureData.length - 20,
+                        ),
                   temperature: state.temperature,
-                  temperatureData: state.temperatureData,
+                  temperatureData: state.temperatureData.length < 20
+                      ? state.temperatureData
+                      : state.temperatureData.sublist(
+                          state.temperatureData.length - 20,
+                        ),
                 ),
                 const SizedBox(height: 20),
                 SecondRowWidgets(
@@ -69,28 +81,16 @@ class _MetricsViewState extends State<MetricsView> {
               checked: state.isReading,
               onChanged: (value) {
                 context.read<MetricsCubit>().toggleReading(value: value);
-                if (state.selectedMode == 'MQTT') {
-                  if (!state.isReading) {
-                    disconnectMQTT();
-                    connectMQTT(
-                      broker: state.broker,
-                      clientID: state.clientID,
-                      port: state.port,
-                      topic: state.topic,
-                    );
-                  } else {
-                    disconnectMQTT();
-                  }
+                if (!state.isReading) {
+                  disconnectMQTT();
+                  connectMQTT(
+                    broker: state.broker,
+                    clientID: state.clientID,
+                    port: state.port,
+                    topic: state.topic,
+                  );
                 } else {
-                  if (!state.isReading) {
-                    connectSerial(
-                      serialPort: state.serialPort,
-                      serialBaudRate: state.serialBaudRate,
-                      serialDataBits: state.serialDataBits,
-                    );
-                  } else {
-                    disconnectSerial();
-                  }
+                  disconnectMQTT();
                 }
               },
               child: Padding(
@@ -117,63 +117,6 @@ class _MetricsViewState extends State<MetricsView> {
         ),
       ],
     );
-  }
-
-  Future<void> connectSerial({
-    required String serialPort,
-    required int serialBaudRate,
-    required int serialDataBits,
-  }) async {
-    try {
-      if (mqttSubscription != null) {
-        await mqttSubscription!.cancel();
-        mqttSubscription = null;
-      }
-
-      if (serialSubscription != null) {
-        await serialSubscription!.cancel();
-        serialSubscription = null;
-      }
-
-      port = SerialPort(serialPort);
-      port!.drain();
-      final portEnabled = port!.openRead();
-      debugPrint(SerialPort.availablePorts.toString());
-
-      if (!portEnabled) {
-        debugPrint('No se pudo abrir el puerto serial');
-        return;
-      }
-
-      final portConfig = SerialPortConfig()
-        ..baudRate = serialBaudRate
-        ..bits = serialDataBits
-        ..stopBits = 1;
-      port!.config = portConfig;
-
-      reader = SerialPortReader(port!);
-
-      // Leer data del puerto serial
-      serialSubscription = reader!.stream.listen((data) {
-        final dataString = String.fromCharCodes(data);
-        debugPrint(dataString);
-        context.read<MetricsCubit>().updateData(dataString);
-      });
-    } catch (e) {
-      debugPrint(e.toString());
-    }
-  }
-
-  void disconnectSerial() {
-    try {
-      setState(() {
-        port!.close();
-        serialSubscription!.cancel();
-        serialSubscription = null;
-      });
-    } catch (e) {
-      debugPrint(e.toString());
-    }
   }
 
   Future<void> connectMQTT({

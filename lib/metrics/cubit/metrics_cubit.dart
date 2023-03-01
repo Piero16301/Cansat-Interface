@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:ditredi/ditredi.dart';
 import 'package:equatable/equatable.dart';
-import 'package:fluent_ui/fluent_ui.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 part 'metrics_state.dart';
@@ -14,14 +13,10 @@ class MetricsCubit extends Cubit<MetricsState> {
   void initializeConnection() {
     emit(
       state.copyWith(
-        selectedMode: _preferences.getString('selectedMode') ?? '',
         broker: _preferences.getString('broker') ?? '',
         port: _preferences.getInt('port') ?? 0,
         clientID: _preferences.getString('clientID') ?? '',
         topic: _preferences.getString('topic') ?? '',
-        serialPort: _preferences.getString('serialPort') ?? '',
-        serialBaudRate: _preferences.getInt('serialBaudRate') ?? 0,
-        serialDataBits: _preferences.getInt('serialDataBits') ?? 0,
       ),
     );
   }
@@ -43,7 +38,6 @@ class MetricsCubit extends Cubit<MetricsState> {
     emit(
       state.copyWith(
         isReading: value,
-        selectedMode: _preferences.getString('selectedMode') ?? 'MQTT',
         humidity: value ? 0 : state.humidity,
         humidityData: value ? [] : state.humidityData,
         pressure: value ? 0 : state.pressure,
@@ -63,48 +57,59 @@ class MetricsCubit extends Cubit<MetricsState> {
 
   void updateData(String message) {
     if (!state.isReading) return;
-    debugPrint('Message: $message');
-    var data = message.split(',');
-    if (data.length != 10) {
-      if (state.bufferCounter == 2) {
-        final tempMessage = state.buffer + message;
-        data = tempMessage.split(',');
-        emit(state.copyWith(buffer: '', bufferCounter: 0));
-      } else {
-        emit(
-          state.copyWith(
-            buffer: state.buffer + message,
-            bufferCounter: state.bufferCounter + 1,
-          ),
-        );
-        return;
-      }
-    }
-    debugPrint('Message: $data');
+    final data = message.split(',');
     emit(
       state.copyWith(
-        humidity: double.parse(data[0]), // Humidity
+        humidity: double.tryParse(data[0]) ?? 0, // Humidity
         humidityData: [
           ...state.humidityData,
-          double.parse(data[0]),
+          double.tryParse(data[0]) ?? 0,
         ], // Humidity Data
-        pressure: double.parse(data[1]), // Pressure
+        pressure: double.tryParse(data[1]) ?? 0, // Pressure
         pressureData: [
           ...state.pressureData,
-          double.parse(data[1]),
+          double.tryParse(data[1]) ?? 0,
         ], // Pressure Data
-        temperature: double.parse(data[2]), // Temperature
+        temperature: double.tryParse(data[2]) ?? 0, // Temperature
         temperatureData: [
           ...state.temperatureData,
-          double.parse(data[2]),
+          double.tryParse(data[2]) ?? 0,
         ], // Temperature Data
-        gyroscopeX: double.parse(data[3]), // Gyroscope X
-        gyroscopeY: double.parse(data[4]), // Gyroscope Y
-        gyroscopeZ: double.parse(data[5]), // Gyroscope Z
-        accelerationX: double.parse(data[6]), // Acceleration X
-        accelerationY: double.parse(data[7]), // Acceleration Y
-        accelerationZ: double.parse(data[8]), // Acceleration Z
-        altitude: double.parse(data[9]), // Altitude
+        gyroscopeX: double.tryParse(data[3]) ?? 0, // Gyroscope X
+        gyroscopeDataX: [
+          ...state.gyroscopeDataX,
+          double.tryParse(data[3]) ?? 0,
+        ], // Gyroscope X Data
+        gyroscopeY: double.tryParse(data[4]) ?? 0, // Gyroscope Y
+        gyroscopeDataY: [
+          ...state.gyroscopeDataY,
+          double.tryParse(data[4]) ?? 0,
+        ], // Gyroscope Y Data
+        gyroscopeZ: double.tryParse(data[5]) ?? 0, // Gyroscope Z
+        gyroscopeDataZ: [
+          ...state.gyroscopeDataZ,
+          double.tryParse(data[5]) ?? 0,
+        ], // Gyroscope Z Data
+        accelerationX: double.tryParse(data[6]) ?? 0, // Acceleration X
+        accelerationDataX: [
+          ...state.accelerationDataX,
+          double.tryParse(data[6]) ?? 0,
+        ], // Acceleration X Data
+        accelerationY: double.tryParse(data[7]) ?? 0, // Acceleration Y
+        accelerationDataY: [
+          ...state.accelerationDataY,
+          double.tryParse(data[7]) ?? 0,
+        ], // Acceleration Y Data
+        accelerationZ: double.tryParse(data[8]) ?? 0, // Acceleration Z
+        accelerationDataZ: [
+          ...state.accelerationDataZ,
+          double.tryParse(data[8]) ?? 0,
+        ], // Acceleration Z Data
+        altitude: double.tryParse(data[9]) ?? 0, // Altitude
+        altitudeData: [
+          ...state.altitudeData,
+          double.tryParse(data[9]) ?? 0,
+        ], // Altitude Data
       ),
     );
   }

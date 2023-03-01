@@ -80,48 +80,6 @@ class SettingsView extends StatelessWidget {
                                   .read<SettingsCubit>()
                                   .topicChanged(value),
                             ),
-                            const SizedBox(height: 20),
-                            const SettingTextTitle(
-                              title: 'Configuración Serial',
-                            ),
-                            const SizedBox(height: 10),
-                            SettingTextField(
-                              header: 'Puerto Serial',
-                              placeholder: 'COM5',
-                              initialValue:
-                                  context.select<SettingsCubit, String>(
-                                (cubit) => cubit.state.serialPort,
-                              ),
-                              onChanged: (value) => context
-                                  .read<SettingsCubit>()
-                                  .serialPortChanged(value),
-                            ),
-                            const SizedBox(height: 10),
-                            SettingTextField(
-                              header: 'Baud Rate',
-                              placeholder: '115200',
-                              initialValue:
-                                  context.select<SettingsCubit, String>(
-                                (cubit) =>
-                                    cubit.state.serialBaudRate.toString(),
-                              ),
-                              onChanged: (value) => context
-                                  .read<SettingsCubit>()
-                                  .serialBaudRateChanged(value),
-                            ),
-                            const SizedBox(height: 10),
-                            SettingTextField(
-                              header: 'Tamaño de bits',
-                              placeholder: '8',
-                              initialValue:
-                                  context.select<SettingsCubit, String>(
-                                (cubit) =>
-                                    cubit.state.serialDataBits.toString(),
-                              ),
-                              onChanged: (value) => context
-                                  .read<SettingsCubit>()
-                                  .serialDataBitsChanged(value),
-                            ),
                           ],
                         ),
                       ),
@@ -139,6 +97,13 @@ class SettingsView extends StatelessWidget {
                               RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(5),
                               ),
+                            ),
+                            backgroundColor: ButtonState.all(
+                              state.savingStatus.isInitial
+                                  ? Colors.blue
+                                  : state.savingStatus.isSaving
+                                      ? Colors.yellow
+                                      : Colors.green,
                             ),
                           ),
                           onPressed: () => state.savingStatus.isInitial

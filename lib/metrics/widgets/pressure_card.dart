@@ -92,6 +92,7 @@ class PressureChart extends StatelessWidget {
       ),
       series: [
         SplineSeries<double, double>(
+          animationDuration: 0,
           dataSource: pressureData,
           markerSettings: const MarkerSettings(isVisible: true),
           xValueMapper: (_, int index) => index.toDouble(),

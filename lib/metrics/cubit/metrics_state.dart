@@ -17,7 +17,6 @@ class MetricsState extends Equatable {
     this.status = MetricsStatus.initial,
     this.faces = const <Face3D>[],
     this.isReading = false,
-    this.selectedMode = 'MQTT',
     this.humidity = 0,
     this.humidityData = const <double>[],
     this.pressure = 0,
@@ -25,27 +24,28 @@ class MetricsState extends Equatable {
     this.temperature = 0,
     this.temperatureData = const <double>[],
     this.gyroscopeX = 0,
+    this.gyroscopeDataX = const <double>[],
     this.gyroscopeY = 0,
+    this.gyroscopeDataY = const <double>[],
     this.gyroscopeZ = 0,
+    this.gyroscopeDataZ = const <double>[],
     this.accelerationX = 0,
+    this.accelerationDataX = const <double>[],
     this.accelerationY = 0,
+    this.accelerationDataY = const <double>[],
     this.accelerationZ = 0,
+    this.accelerationDataZ = const <double>[],
     this.altitude = 0,
+    this.altitudeData = const <double>[],
     this.broker = '',
     this.port = 0,
     this.clientID = '',
     this.topic = '',
-    this.serialPort = '',
-    this.serialBaudRate = 0,
-    this.serialDataBits = 0,
-    this.buffer = '',
-    this.bufferCounter = 0,
   });
 
   final MetricsStatus status;
   final List<Face3D> faces;
   final bool isReading;
-  final String selectedMode;
 
   // Sensor BME280
   final double humidity;
@@ -57,12 +57,19 @@ class MetricsState extends Equatable {
 
   // Sensor MPU6050
   final double gyroscopeX;
+  final List<double> gyroscopeDataX;
   final double gyroscopeY;
+  final List<double> gyroscopeDataY;
   final double gyroscopeZ;
+  final List<double> gyroscopeDataZ;
   final double accelerationX;
+  final List<double> accelerationDataX;
   final double accelerationY;
+  final List<double> accelerationDataY;
   final double accelerationZ;
+  final List<double> accelerationDataZ;
   final double altitude;
+  final List<double> altitudeData;
 
   // MQTT variables
   final String broker;
@@ -70,20 +77,10 @@ class MetricsState extends Equatable {
   final String clientID;
   final String topic;
 
-  // Serial variables
-  final String serialPort;
-  final int serialBaudRate;
-  final int serialDataBits;
-
-  // Buffers
-  final String buffer;
-  final int bufferCounter;
-
   MetricsState copyWith({
     MetricsStatus? status,
     List<Face3D>? faces,
     bool? isReading,
-    String? selectedMode,
     double? humidity,
     List<double>? humidityData,
     double? pressure,
@@ -91,27 +88,28 @@ class MetricsState extends Equatable {
     double? temperature,
     List<double>? temperatureData,
     double? gyroscopeX,
+    List<double>? gyroscopeDataX,
     double? gyroscopeY,
+    List<double>? gyroscopeDataY,
     double? gyroscopeZ,
+    List<double>? gyroscopeDataZ,
     double? accelerationX,
+    List<double>? accelerationDataX,
     double? accelerationY,
+    List<double>? accelerationDataY,
     double? accelerationZ,
+    List<double>? accelerationDataZ,
     double? altitude,
+    List<double>? altitudeData,
     String? broker,
     int? port,
     String? clientID,
     String? topic,
-    String? serialPort,
-    int? serialBaudRate,
-    int? serialDataBits,
-    String? buffer,
-    int? bufferCounter,
   }) {
     return MetricsState(
       status: status ?? this.status,
       faces: faces ?? this.faces,
       isReading: isReading ?? this.isReading,
-      selectedMode: selectedMode ?? this.selectedMode,
       humidity: humidity ?? this.humidity,
       humidityData: humidityData ?? this.humidityData,
       pressure: pressure ?? this.pressure,
@@ -119,21 +117,23 @@ class MetricsState extends Equatable {
       temperature: temperature ?? this.temperature,
       temperatureData: temperatureData ?? this.temperatureData,
       gyroscopeX: gyroscopeX ?? this.gyroscopeX,
+      gyroscopeDataX: gyroscopeDataX ?? this.gyroscopeDataX,
       gyroscopeY: gyroscopeY ?? this.gyroscopeY,
+      gyroscopeDataY: gyroscopeDataY ?? this.gyroscopeDataY,
       gyroscopeZ: gyroscopeZ ?? this.gyroscopeZ,
+      gyroscopeDataZ: gyroscopeDataZ ?? this.gyroscopeDataZ,
       accelerationX: accelerationX ?? this.accelerationX,
+      accelerationDataX: accelerationDataX ?? this.accelerationDataX,
       accelerationY: accelerationY ?? this.accelerationY,
+      accelerationDataY: accelerationDataY ?? this.accelerationDataY,
       accelerationZ: accelerationZ ?? this.accelerationZ,
+      accelerationDataZ: accelerationDataZ ?? this.accelerationDataZ,
       altitude: altitude ?? this.altitude,
+      altitudeData: altitudeData ?? this.altitudeData,
       broker: broker ?? this.broker,
       port: port ?? this.port,
       clientID: clientID ?? this.clientID,
       topic: topic ?? this.topic,
-      serialPort: serialPort ?? this.serialPort,
-      serialBaudRate: serialBaudRate ?? this.serialBaudRate,
-      serialDataBits: serialDataBits ?? this.serialDataBits,
-      buffer: buffer ?? this.buffer,
-      bufferCounter: bufferCounter ?? this.bufferCounter,
     );
   }
 
@@ -142,7 +142,6 @@ class MetricsState extends Equatable {
         status,
         faces,
         isReading,
-        selectedMode,
         humidity,
         humidityData,
         pressure,
@@ -150,20 +149,22 @@ class MetricsState extends Equatable {
         temperature,
         temperatureData,
         gyroscopeX,
+        gyroscopeDataX,
         gyroscopeY,
+        gyroscopeDataY,
         gyroscopeZ,
+        gyroscopeDataZ,
         accelerationX,
+        accelerationDataX,
         accelerationY,
+        accelerationDataY,
         accelerationZ,
+        accelerationDataZ,
         altitude,
+        altitudeData,
         broker,
         port,
         clientID,
         topic,
-        serialPort,
-        serialBaudRate,
-        serialDataBits,
-        buffer,
-        bufferCounter,
       ];
 }

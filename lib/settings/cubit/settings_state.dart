@@ -17,9 +17,6 @@ class SettingsState extends Equatable {
     this.port = 0,
     this.clientID = '',
     this.topic = '',
-    this.serialPort = '',
-    this.serialBaudRate = 0,
-    this.serialDataBits = 0,
   });
 
   final SavingStatus savingStatus;
@@ -27,9 +24,6 @@ class SettingsState extends Equatable {
   final int port;
   final String clientID;
   final String topic;
-  final String serialPort;
-  final int serialBaudRate;
-  final int serialDataBits;
 
   SettingsState copyWith({
     SavingStatus? savingStatus,
@@ -37,9 +31,6 @@ class SettingsState extends Equatable {
     int? port,
     String? clientID,
     String? topic,
-    String? serialPort,
-    int? serialBaudRate,
-    int? serialDataBits,
   }) {
     return SettingsState(
       savingStatus: savingStatus ?? this.savingStatus,
@@ -47,9 +38,6 @@ class SettingsState extends Equatable {
       port: port ?? this.port,
       clientID: clientID ?? this.clientID,
       topic: topic ?? this.topic,
-      serialPort: serialPort ?? this.serialPort,
-      serialBaudRate: serialBaudRate ?? this.serialBaudRate,
-      serialDataBits: serialDataBits ?? this.serialDataBits,
     );
   }
 
@@ -60,8 +48,5 @@ class SettingsState extends Equatable {
         port,
         clientID,
         topic,
-        serialPort,
-        serialBaudRate,
-        serialDataBits,
       ];
 }

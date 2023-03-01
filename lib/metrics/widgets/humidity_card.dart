@@ -94,6 +94,7 @@ class HumidityChart extends StatelessWidget {
       ),
       series: [
         SplineSeries<double, double>(
+          animationDuration: 0,
           dataSource: humidityData,
           markerSettings: const MarkerSettings(isVisible: true),
           xValueMapper: (_, int index) => index.toDouble(),
