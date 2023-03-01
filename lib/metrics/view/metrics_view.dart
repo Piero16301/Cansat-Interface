@@ -6,6 +6,7 @@ import 'package:cansat_interface/metrics/metrics.dart';
 import 'package:ditredi/ditredi.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_libserialport/flutter_libserialport.dart';
 import 'package:mqtt_client/mqtt_client.dart' as mqtt;
 import 'package:mqtt_client/mqtt_server_client.dart';
 
@@ -19,11 +20,15 @@ class MetricsView extends StatefulWidget {
 class _MetricsViewState extends State<MetricsView> {
   MqttServerClient? client;
   mqtt.MqttConnectionState? connectionState;
-  StreamSubscription? subscription;
+  StreamSubscription? mqttSubscription;
+
+  SerialPort? port;
+  SerialPortReader? reader;
+  StreamSubscription? serialSubscription;
 
   @override
   Widget build(BuildContext context) {
-    context.read<MetricsCubit>().initializeMQTT();
+    context.read<MetricsCubit>().initializeConnection();
     context.read<MetricsCubit>().load3DModel();
 
     return Stack(
@@ -61,18 +66,31 @@ class _MetricsViewState extends State<MetricsView> {
             bottom: 10,
             right: 10,
             child: ToggleButton(
-              checked: state.isReadingMQTT,
+              checked: state.isReading,
               onChanged: (value) {
-                context.read<MetricsCubit>().toggleMQTTReading(value: value);
-                if (!state.isReadingMQTT) {
-                  connectMQTT(
-                    broker: state.broker,
-                    clientID: state.clientID,
-                    port: state.port,
-                    topic: state.topic,
-                  );
+                context.read<MetricsCubit>().toggleReading(value: value);
+                if (state.selectedMode == 'MQTT') {
+                  if (!state.isReading) {
+                    disconnectMQTT();
+                    connectMQTT(
+                      broker: state.broker,
+                      clientID: state.clientID,
+                      port: state.port,
+                      topic: state.topic,
+                    );
+                  } else {
+                    disconnectMQTT();
+                  }
                 } else {
-                  disconnectMQTT();
+                  if (!state.isReading) {
+                    connectSerial(
+                      serialPort: state.serialPort,
+                      serialBaudRate: state.serialBaudRate,
+                      serialDataBits: state.serialDataBits,
+                    );
+                  } else {
+                    disconnectSerial();
+                  }
                 }
               },
               child: Padding(
@@ -80,14 +98,12 @@ class _MetricsViewState extends State<MetricsView> {
                 child: Row(
                   children: [
                     Icon(
-                      state.isReadingMQTT
-                          ? FluentIcons.pause
-                          : FluentIcons.play,
+                      state.isReading ? FluentIcons.pause : FluentIcons.play,
                       size: 20,
                     ),
                     const SizedBox(width: 5),
                     Text(
-                      state.isReadingMQTT ? 'Pausar' : 'Iniciar',
+                      state.isReading ? 'Pausar' : 'Iniciar',
                       style: const TextStyle(
                         fontSize: 16,
                         fontFamily: 'Roboto-Medium',
@@ -103,6 +119,63 @@ class _MetricsViewState extends State<MetricsView> {
     );
   }
 
+  Future<void> connectSerial({
+    required String serialPort,
+    required int serialBaudRate,
+    required int serialDataBits,
+  }) async {
+    try {
+      if (mqttSubscription != null) {
+        await mqttSubscription!.cancel();
+        mqttSubscription = null;
+      }
+
+      if (serialSubscription != null) {
+        await serialSubscription!.cancel();
+        serialSubscription = null;
+      }
+
+      port = SerialPort(serialPort);
+      port!.drain();
+      final portEnabled = port!.openRead();
+      debugPrint(SerialPort.availablePorts.toString());
+
+      if (!portEnabled) {
+        debugPrint('No se pudo abrir el puerto serial');
+        return;
+      }
+
+      final portConfig = SerialPortConfig()
+        ..baudRate = serialBaudRate
+        ..bits = serialDataBits
+        ..stopBits = 1;
+      port!.config = portConfig;
+
+      reader = SerialPortReader(port!);
+
+      // Leer data del puerto serial
+      serialSubscription = reader!.stream.listen((data) {
+        final dataString = String.fromCharCodes(data);
+        debugPrint(dataString);
+        context.read<MetricsCubit>().updateData(dataString);
+      });
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
+
+  void disconnectSerial() {
+    try {
+      setState(() {
+        port!.close();
+        serialSubscription!.cancel();
+        serialSubscription = null;
+      });
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
+
   Future<void> connectMQTT({
     required String broker,
     required String clientID,
@@ -110,6 +183,16 @@ class _MetricsViewState extends State<MetricsView> {
     required String topic,
   }) async {
     try {
+      if (mqttSubscription != null) {
+        await mqttSubscription!.cancel();
+        mqttSubscription = null;
+      }
+
+      if (serialSubscription != null) {
+        await serialSubscription!.cancel();
+        serialSubscription = null;
+      }
+
       client = MqttServerClient(broker, clientID);
       client!.port = port;
       client!.logging(on: false);
@@ -143,7 +226,7 @@ class _MetricsViewState extends State<MetricsView> {
         disconnectMQTT();
       }
 
-      subscription = client!.updates!.listen(onMessage);
+      mqttSubscription = client!.updates!.listen(onMessage);
 
       subscribeToTopic(topic);
     } catch (e) {
@@ -171,7 +254,7 @@ class _MetricsViewState extends State<MetricsView> {
     debugPrint('[MQTT client] message with message: $message');
 
     // Update data in cubit
-    context.read<MetricsCubit>().updateMQTTData(message);
+    context.read<MetricsCubit>().updateData(message);
   }
 
   void disconnectMQTT() {
@@ -190,8 +273,8 @@ class _MetricsViewState extends State<MetricsView> {
       setState(() {
         connectionState = client!.connectionStatus!.state;
         client = null;
-        subscription!.cancel();
-        subscription = null;
+        mqttSubscription!.cancel();
+        mqttSubscription = null;
       });
     } catch (e) {
       debugPrint('[MQTT client] ERROR: $e');

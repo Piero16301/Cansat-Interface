@@ -14,11 +14,14 @@ class SettingsCubit extends Cubit<SettingsState> {
   void _loadSettings() {
     emit(
       state.copyWith(
-        savingStatus: SavingStatus.saved,
+        savingStatus: SavingStatus.initial,
         broker: _preferences.getString('broker') ?? '',
         port: _preferences.getInt('port') ?? 0,
         clientID: _preferences.getString('clientID') ?? '',
         topic: _preferences.getString('topic') ?? '',
+        serialPort: _preferences.getString('serialPort') ?? '',
+        serialBaudRate: _preferences.getInt('serialBaudRate') ?? 0,
+        serialDataBits: _preferences.getInt('serialDataBits') ?? 0,
       ),
     );
   }
@@ -59,6 +62,33 @@ class SettingsCubit extends Cubit<SettingsState> {
     );
   }
 
+  void serialPortChanged(String serialPort) {
+    emit(
+      state.copyWith(
+        savingStatus: SavingStatus.initial,
+        serialPort: serialPort,
+      ),
+    );
+  }
+
+  void serialBaudRateChanged(String serialBaudRate) {
+    emit(
+      state.copyWith(
+        savingStatus: SavingStatus.initial,
+        serialBaudRate: int.tryParse(serialBaudRate) ?? 0,
+      ),
+    );
+  }
+
+  void serialDataBitsChanged(String serialDataBits) {
+    emit(
+      state.copyWith(
+        savingStatus: SavingStatus.initial,
+        serialDataBits: int.tryParse(serialDataBits) ?? 0,
+      ),
+    );
+  }
+
   Future<void> saveSettings() async {
     emit(state.copyWith(savingStatus: SavingStatus.saving));
     try {
@@ -66,6 +96,9 @@ class SettingsCubit extends Cubit<SettingsState> {
       await _preferences.setInt('port', state.port);
       await _preferences.setString('clientID', state.clientID);
       await _preferences.setString('topic', state.topic);
+      await _preferences.setString('serialPort', state.serialPort);
+      await _preferences.setInt('serialBaudRate', state.serialBaudRate);
+      await _preferences.setInt('serialDataBits', state.serialDataBits);
       await Future<void>.delayed(const Duration(seconds: 1));
       emit(state.copyWith(savingStatus: SavingStatus.saved));
     } catch (e) {

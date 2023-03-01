@@ -16,7 +16,8 @@ class MetricsState extends Equatable {
   const MetricsState({
     this.status = MetricsStatus.initial,
     this.faces = const <Face3D>[],
-    this.isReadingMQTT = false,
+    this.isReading = false,
+    this.selectedMode = 'MQTT',
     this.humidity = 0,
     this.humidityData = const <double>[],
     this.pressure = 0,
@@ -34,11 +35,17 @@ class MetricsState extends Equatable {
     this.port = 0,
     this.clientID = '',
     this.topic = '',
+    this.serialPort = '',
+    this.serialBaudRate = 0,
+    this.serialDataBits = 0,
+    this.buffer = '',
+    this.bufferCounter = 0,
   });
 
   final MetricsStatus status;
   final List<Face3D> faces;
-  final bool isReadingMQTT;
+  final bool isReading;
+  final String selectedMode;
 
   // Sensor BME280
   final double humidity;
@@ -63,10 +70,20 @@ class MetricsState extends Equatable {
   final String clientID;
   final String topic;
 
+  // Serial variables
+  final String serialPort;
+  final int serialBaudRate;
+  final int serialDataBits;
+
+  // Buffers
+  final String buffer;
+  final int bufferCounter;
+
   MetricsState copyWith({
     MetricsStatus? status,
     List<Face3D>? faces,
-    bool? isReadingMQTT,
+    bool? isReading,
+    String? selectedMode,
     double? humidity,
     List<double>? humidityData,
     double? pressure,
@@ -84,11 +101,17 @@ class MetricsState extends Equatable {
     int? port,
     String? clientID,
     String? topic,
+    String? serialPort,
+    int? serialBaudRate,
+    int? serialDataBits,
+    String? buffer,
+    int? bufferCounter,
   }) {
     return MetricsState(
       status: status ?? this.status,
       faces: faces ?? this.faces,
-      isReadingMQTT: isReadingMQTT ?? this.isReadingMQTT,
+      isReading: isReading ?? this.isReading,
+      selectedMode: selectedMode ?? this.selectedMode,
       humidity: humidity ?? this.humidity,
       humidityData: humidityData ?? this.humidityData,
       pressure: pressure ?? this.pressure,
@@ -106,6 +129,11 @@ class MetricsState extends Equatable {
       port: port ?? this.port,
       clientID: clientID ?? this.clientID,
       topic: topic ?? this.topic,
+      serialPort: serialPort ?? this.serialPort,
+      serialBaudRate: serialBaudRate ?? this.serialBaudRate,
+      serialDataBits: serialDataBits ?? this.serialDataBits,
+      buffer: buffer ?? this.buffer,
+      bufferCounter: bufferCounter ?? this.bufferCounter,
     );
   }
 
@@ -113,7 +141,8 @@ class MetricsState extends Equatable {
   List<Object> get props => [
         status,
         faces,
-        isReadingMQTT,
+        isReading,
+        selectedMode,
         humidity,
         humidityData,
         pressure,
@@ -131,5 +160,10 @@ class MetricsState extends Equatable {
         port,
         clientID,
         topic,
+        serialPort,
+        serialBaudRate,
+        serialDataBits,
+        buffer,
+        bufferCounter,
       ];
 }

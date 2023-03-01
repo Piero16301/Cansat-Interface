@@ -15,6 +15,8 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.read<HomeCubit>().loadSelectedMode();
+
     return NavigationView(
       appBar: NavigationAppBar(
         title: DefaultTextStyle(
@@ -22,6 +24,71 @@ class HomeView extends StatelessWidget {
           child: const Text('Interfaz CANSAT'),
         ),
         automaticallyImplyLeading: false,
+        actions: BlocBuilder<HomeCubit, HomeState>(
+          builder: (context, state) => Padding(
+            padding: const EdgeInsets.only(right: 10),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                DropDownButton(
+                  title: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(state.selectedIcon),
+                      const SizedBox(width: 5),
+                      Text(
+                        state.selectedMode,
+                        style: const TextStyle(
+                          fontFamily: 'Roboto-Medium',
+                          fontSize: 14,
+                        ),
+                      ),
+                    ],
+                  ),
+                  items: [
+                    MenuFlyoutItem(
+                      text: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: const [
+                          Icon(FluentIcons.internet_sharing),
+                          SizedBox(width: 5),
+                          Text(
+                            'MQTT',
+                            style: TextStyle(
+                              fontFamily: 'Roboto-Medium',
+                              fontSize: 14,
+                            ),
+                          ),
+                        ],
+                      ),
+                      onPressed: () =>
+                          context.read<HomeCubit>().changeSelectedMode('MQTT'),
+                    ),
+                    MenuFlyoutItem(
+                      text: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: const [
+                          Icon(FluentIcons.plug_connected),
+                          SizedBox(width: 5),
+                          Text(
+                            'Serial',
+                            style: TextStyle(
+                              fontFamily: 'Roboto-Medium',
+                              fontSize: 14,
+                            ),
+                          ),
+                        ],
+                      ),
+                      onPressed: () => context
+                          .read<HomeCubit>()
+                          .changeSelectedMode('Serial'),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
       pane: NavigationPane(
         displayMode: PaneDisplayMode.minimal,
