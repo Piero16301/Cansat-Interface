@@ -6,11 +6,13 @@ class PressureCard extends StatelessWidget {
   const PressureCard({
     required this.pressure,
     required this.pressureData,
+    required this.pressureStartIndex,
     super.key,
   });
 
   final double pressure;
   final List<double> pressureData;
+  final int pressureStartIndex;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +37,10 @@ class PressureCard extends StatelessWidget {
                 child: Row(
                   children: [
                     Expanded(
-                      child: PressureChart(pressureData: pressureData),
+                      child: PressureChart(
+                        pressureData: pressureData,
+                        pressureStartIndex: pressureStartIndex,
+                      ),
                     ),
                     const SizedBox(width: 20),
                     PressureBarIndicator(pressure: pressure),
@@ -53,10 +58,12 @@ class PressureCard extends StatelessWidget {
 class PressureChart extends StatelessWidget {
   const PressureChart({
     required this.pressureData,
+    required this.pressureStartIndex,
     super.key,
   });
 
   final List<double> pressureData;
+  final int pressureStartIndex;
 
   @override
   Widget build(BuildContext context) {
@@ -95,7 +102,7 @@ class PressureChart extends StatelessWidget {
           animationDuration: 0,
           dataSource: pressureData,
           markerSettings: const MarkerSettings(isVisible: true),
-          xValueMapper: (_, int index) => index.toDouble(),
+          xValueMapper: (_, int index) => pressureStartIndex + index.toDouble(),
           yValueMapper: (double pressure, _) => pressure,
           color: const Color(0xff0074E3),
           width: 2,

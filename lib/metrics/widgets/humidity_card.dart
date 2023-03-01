@@ -6,11 +6,13 @@ class HumidityCard extends StatelessWidget {
   const HumidityCard({
     required this.humidity,
     required this.humidityData,
+    required this.humidityStartIndex,
     super.key,
   });
 
   final double humidity;
   final List<double> humidityData;
+  final int humidityStartIndex;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +37,10 @@ class HumidityCard extends StatelessWidget {
                 child: Row(
                   children: [
                     Expanded(
-                      child: HumidityChart(humidityData: humidityData),
+                      child: HumidityChart(
+                        humidityData: humidityData,
+                        humidityStartIndex: humidityStartIndex,
+                      ),
                     ),
                     const SizedBox(width: 20),
                     SizedBox(
@@ -55,10 +60,12 @@ class HumidityCard extends StatelessWidget {
 class HumidityChart extends StatelessWidget {
   const HumidityChart({
     required this.humidityData,
+    required this.humidityStartIndex,
     super.key,
   });
 
   final List<double> humidityData;
+  final int humidityStartIndex;
 
   @override
   Widget build(BuildContext context) {
@@ -97,7 +104,7 @@ class HumidityChart extends StatelessWidget {
           animationDuration: 0,
           dataSource: humidityData,
           markerSettings: const MarkerSettings(isVisible: true),
-          xValueMapper: (_, int index) => index.toDouble(),
+          xValueMapper: (_, int index) => humidityStartIndex + index.toDouble(),
           yValueMapper: (double humidity, _) => humidity,
           color: const Color(0xff0074E3),
           width: 2,

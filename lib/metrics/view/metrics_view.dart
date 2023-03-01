@@ -26,6 +26,8 @@ class _MetricsViewState extends State<MetricsView> {
   SerialPortReader? reader;
   StreamSubscription? serialSubscription;
 
+  int metricsLength = 20;
+
   @override
   Widget build(BuildContext context) {
     context.read<MetricsCubit>().initializeConnection();
@@ -40,23 +42,33 @@ class _MetricsViewState extends State<MetricsView> {
               children: [
                 FirstRowWidgets(
                   humidity: state.humidity,
-                  humidityData: state.humidityData.length < 20
+                  humidityData: state.humidityData.length < metricsLength
                       ? state.humidityData
                       : state.humidityData.sublist(
-                          state.humidityData.length - 20,
+                          state.humidityData.length - metricsLength,
                         ),
+                  humidityStartIndex: state.humidityData.length < metricsLength
+                      ? 0
+                      : state.humidityData.length - metricsLength,
                   pressure: state.pressure,
-                  pressureData: state.pressureData.length < 20
+                  pressureData: state.pressureData.length < metricsLength
                       ? state.pressureData
                       : state.pressureData.sublist(
-                          state.pressureData.length - 20,
+                          state.pressureData.length - metricsLength,
                         ),
+                  pressureStartIndex: state.pressureData.length < metricsLength
+                      ? 0
+                      : state.pressureData.length - metricsLength,
                   temperature: state.temperature,
-                  temperatureData: state.temperatureData.length < 20
+                  temperatureData: state.temperatureData.length < metricsLength
                       ? state.temperatureData
                       : state.temperatureData.sublist(
-                          state.temperatureData.length - 20,
+                          state.temperatureData.length - metricsLength,
                         ),
+                  temperatureStartIndex:
+                      state.temperatureData.length < metricsLength
+                          ? 0
+                          : state.temperatureData.length - metricsLength,
                 ),
                 const SizedBox(height: 20),
                 SecondRowWidgets(
@@ -230,19 +242,25 @@ class FirstRowWidgets extends StatelessWidget {
   const FirstRowWidgets({
     required this.humidity,
     required this.humidityData,
+    required this.humidityStartIndex,
     required this.pressure,
     required this.pressureData,
+    required this.pressureStartIndex,
     required this.temperature,
     required this.temperatureData,
+    required this.temperatureStartIndex,
     super.key,
   });
 
   final double humidity;
   final List<double> humidityData;
+  final int humidityStartIndex;
   final double pressure;
   final List<double> pressureData;
+  final int pressureStartIndex;
   final double temperature;
   final List<double> temperatureData;
+  final int temperatureStartIndex;
 
   @override
   Widget build(BuildContext context) {
@@ -253,16 +271,19 @@ class FirstRowWidgets extends StatelessWidget {
             HumidityCard(
               humidity: humidity,
               humidityData: humidityData,
+              humidityStartIndex: humidityStartIndex,
             ),
             const SizedBox(width: 20),
             PressureCard(
               pressure: pressure,
               pressureData: pressureData,
+              pressureStartIndex: pressureStartIndex,
             ),
             const SizedBox(width: 20),
             TemperatureCard(
               temperature: temperature,
               temperatureData: temperatureData,
+              temperatureStartIndex: temperatureStartIndex,
             ),
           ],
         ),

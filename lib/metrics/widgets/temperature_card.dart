@@ -6,11 +6,13 @@ class TemperatureCard extends StatelessWidget {
   const TemperatureCard({
     required this.temperature,
     required this.temperatureData,
+    required this.temperatureStartIndex,
     super.key,
   });
 
   final double temperature;
   final List<double> temperatureData;
+  final int temperatureStartIndex;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +40,10 @@ class TemperatureCard extends StatelessWidget {
                 child: Row(
                   children: [
                     Expanded(
-                      child: TemperatureChart(temperatureData: temperatureData),
+                      child: TemperatureChart(
+                        temperatureData: temperatureData,
+                        temperatureStartIndex: temperatureStartIndex,
+                      ),
                     ),
                     Expanded(
                       child: TemperatureRadialIndicator(
@@ -61,10 +66,12 @@ class TemperatureCard extends StatelessWidget {
 class TemperatureChart extends StatelessWidget {
   const TemperatureChart({
     required this.temperatureData,
+    required this.temperatureStartIndex,
     super.key,
   });
 
   final List<double> temperatureData;
+  final int temperatureStartIndex;
 
   @override
   Widget build(BuildContext context) {
@@ -103,7 +110,8 @@ class TemperatureChart extends StatelessWidget {
           animationDuration: 0,
           dataSource: temperatureData,
           markerSettings: const MarkerSettings(isVisible: true),
-          xValueMapper: (_, int index) => index.toDouble(),
+          xValueMapper: (_, int index) =>
+              temperatureStartIndex + index.toDouble(),
           yValueMapper: (double temperature, _) => temperature,
           color: const Color(0xff0074E3),
           width: 2,
