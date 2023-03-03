@@ -41,6 +41,7 @@ flutter:
   assets:
     - assets/images/
     - assets/models/
+    - assets/
   fonts:
     - family: Roboto-Bold
       fonts:
@@ -60,19 +61,19 @@ flutter_icons:
   ios: false
   web:
     generate: true
-    image_path: "assets/app_icon.png"
+    image_path: "assets/cansat_logo.png"
     icon_size: 256
   windows:
     generate: true
-    image_path: "assets/app_icon.png"
+    image_path: "assets/cansat_logo.png"
     icon_size: 256
   macos:
     generate: true
-    image_path: "assets/app_icon.png"
+    image_path: "assets/cansat_logo.png"
     icon_size: 256
   linux:
     generate: true
-    image_path: "assets/app_icon.png"
+    image_path: "assets/cansat_logo.png"
     icon_size: 256
 
 msix_config:
@@ -80,7 +81,7 @@ msix_config:
   publisher_display_name: Piero Angelo Morales Alcalde
   identity_name: 29622PieroAngeloMoralesAl.CANSATInterface
   publisher: CN=91BE0923-E8F6-4F62-AE9E-2A123C9AC1AF
-  msix_version: 1.4.0.0
+  msix_version: 1.5.0.0
   languages: es-es
   logo_path: assets/app_icon.png
   capabilities: internetClient

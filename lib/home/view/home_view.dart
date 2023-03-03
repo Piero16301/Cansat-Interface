@@ -19,7 +19,18 @@ class HomeView extends StatelessWidget {
       appBar: NavigationAppBar(
         title: DefaultTextStyle(
           style: FluentTheme.of(context).typography.subtitle!,
-          child: const Text('Interfaz CANSAT'),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 5),
+            child: Row(
+              children: [
+                Image.asset(
+                  'assets/cansat_logo.png',
+                ),
+                const SizedBox(width: 10),
+                const Text('CANSAT Telemetry'),
+              ],
+            ),
+          ),
         ),
         automaticallyImplyLeading: false,
       ),
