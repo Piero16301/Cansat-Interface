@@ -20,6 +20,7 @@ class TemperatureCard extends StatelessWidget {
     const interval2 = 30.0;
 
     return Expanded(
+      flex: 6,
       child: Card(
         borderRadius: BorderRadius.circular(10),
         child: Column(
@@ -40,12 +41,14 @@ class TemperatureCard extends StatelessWidget {
                 child: Row(
                   children: [
                     Expanded(
+                      flex: 7,
                       child: TemperatureChart(
                         temperatureData: temperatureData,
                         temperatureStartIndex: temperatureStartIndex,
                       ),
                     ),
                     Expanded(
+                      flex: 5,
                       child: TemperatureRadialIndicator(
                         interval1: interval1,
                         interval2: interval2,

@@ -328,6 +328,10 @@ class SecondRowWidgets extends StatelessWidget {
               altitude: altitude,
             ),
             const SizedBox(width: 20),
+            AltitudeCard(
+              altitude: altitude,
+            ),
+            const SizedBox(width: 20),
             AccelerometerCard(
               x: accelerationX,
               y: accelerationY,

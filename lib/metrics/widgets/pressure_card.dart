@@ -17,6 +17,7 @@ class PressureCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
+      flex: 5,
       child: Card(
         borderRadius: BorderRadius.circular(10),
         child: Column(
@@ -42,7 +43,7 @@ class PressureCard extends StatelessWidget {
                         pressureStartIndex: pressureStartIndex,
                       ),
                     ),
-                    const SizedBox(width: 20),
+                    // const SizedBox(width: 20),
                     PressureBarIndicator(pressure: pressure),
                   ],
                 ),

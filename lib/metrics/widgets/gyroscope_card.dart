@@ -1,8 +1,7 @@
 import 'package:ditredi/ditredi.dart';
 import 'package:fluent_ui/fluent_ui.dart';
-import 'package:syncfusion_flutter_gauges/gauges.dart';
 
-class GyroscopeCard extends StatefulWidget {
+class GyroscopeCard extends StatelessWidget {
   const GyroscopeCard({
     required this.x,
     required this.y,
@@ -19,19 +18,14 @@ class GyroscopeCard extends StatefulWidget {
   final List<Face3D> faces;
 
   @override
-  State<GyroscopeCard> createState() => _GyroscopeCardState();
-}
-
-class _GyroscopeCardState extends State<GyroscopeCard> {
-  @override
   Widget build(BuildContext context) {
     final controller = DiTreDiController(
-      rotationX: widget.x,
-      rotationY: widget.y,
-      rotationZ: widget.z,
+      rotationX: x,
+      rotationY: y,
+      rotationZ: z,
       // light: Vector3(-0.5, -0.5, 0.5),
       ambientLightStrength: 0.4,
-      // userScale: 2,
+      userScale: 1.5,
     );
 
     return Expanded(
@@ -50,52 +44,80 @@ class _GyroscopeCardState extends State<GyroscopeCard> {
             ),
             const SizedBox(height: 10),
             Expanded(
-              child: Row(
+              child: Column(
                 children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Text(
-                        'X\n${widget.x.toStringAsFixed(3)}',
-                        style: const TextStyle(
-                          fontSize: 14,
-                          fontFamily: 'Roboto-Medium',
-                        ),
-                      ),
-                      Text(
-                        'Y\n${widget.y.toStringAsFixed(3)}',
-                        style: const TextStyle(
-                          fontSize: 14,
-                          fontFamily: 'Roboto-Medium',
-                        ),
-                      ),
-                      Text(
-                        'Z\n${widget.z.toStringAsFixed(3)}',
-                        style: const TextStyle(
-                          fontSize: 14,
-                          fontFamily: 'Roboto-Medium',
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(width: 20),
                   Expanded(
-                    child: widget.faces.isEmpty
+                    child: faces.isEmpty
                         ? const SizedBox(
                             width: double.infinity,
                             child: Center(child: ProgressRing()),
                           )
                         : DiTreDi(
                             figures: [
-                              Mesh3D(widget.faces),
+                              Mesh3D(faces),
                             ],
                             controller: controller,
                           ),
                   ),
                   const SizedBox(width: 20),
-                  SizedBox(
-                    height: double.infinity,
-                    child: AltitudeGauge(altitude: widget.altitude),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Column(
+                        children: [
+                          const Text(
+                            'X',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontFamily: 'Roboto-Medium',
+                            ),
+                          ),
+                          Text(
+                            x.toStringAsFixed(3),
+                            style: const TextStyle(
+                              fontSize: 14,
+                              fontFamily: 'Roboto-Medium',
+                            ),
+                          ),
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          const Text(
+                            'Y',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontFamily: 'Roboto-Medium',
+                            ),
+                          ),
+                          Text(
+                            y.toStringAsFixed(3),
+                            style: const TextStyle(
+                              fontSize: 14,
+                              fontFamily: 'Roboto-Medium',
+                            ),
+                          ),
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          const Text(
+                            'Z',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontFamily: 'Roboto-Medium',
+                            ),
+                          ),
+                          Text(
+                            z.toStringAsFixed(3),
+                            style: const TextStyle(
+                              fontSize: 14,
+                              fontFamily: 'Roboto-Medium',
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -103,71 +125,6 @@ class _GyroscopeCardState extends State<GyroscopeCard> {
           ],
         ),
       ),
-    );
-  }
-}
-
-class AltitudeGauge extends StatelessWidget {
-  const AltitudeGauge({
-    required this.altitude,
-    super.key,
-  });
-
-  final double altitude;
-
-  @override
-  Widget build(BuildContext context) {
-    return SfLinearGauge(
-      interval: 100,
-      maximum: 700,
-      orientation: LinearGaugeOrientation.vertical,
-      tickPosition: LinearElementPosition.cross,
-      axisTrackStyle: const LinearAxisTrackStyle(thickness: 10),
-      axisLabelStyle: const TextStyle(
-        fontSize: 12,
-        fontFamily: 'Roboto-Medium',
-      ),
-      markerPointers: [
-        LinearShapePointer(
-          value: altitude,
-          width: 10,
-          color: Colors.blue,
-          position: LinearElementPosition.cross,
-          animationDuration: 250,
-        ),
-        const LinearWidgetPointer(
-          markerAlignment: LinearMarkerAlignment.end,
-          value: 700,
-          animationDuration: 0,
-          position: LinearElementPosition.outside,
-          offset: 7,
-          child: SizedBox(
-            height: 20,
-            child: Text(
-              'm',
-              style: TextStyle(
-                fontSize: 16,
-                fontFamily: 'Roboto-Medium',
-              ),
-            ),
-          ),
-        ),
-        LinearWidgetPointer(
-          value: altitude,
-          position: LinearElementPosition.outside,
-          animationDuration: 250,
-          child: RotatedBox(
-            quarterTurns: -1,
-            child: Text(
-              altitude.toStringAsFixed(3),
-              style: const TextStyle(
-                fontSize: 12,
-                fontFamily: 'Roboto-Medium',
-              ),
-            ),
-          ),
-        ),
-      ],
     );
   }
 }

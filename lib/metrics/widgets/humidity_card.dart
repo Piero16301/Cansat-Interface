@@ -17,6 +17,7 @@ class HumidityCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
+      flex: 5,
       child: Card(
         borderRadius: BorderRadius.circular(10),
         child: Column(
@@ -42,7 +43,7 @@ class HumidityCard extends StatelessWidget {
                         humidityStartIndex: humidityStartIndex,
                       ),
                     ),
-                    const SizedBox(width: 20),
+                    // const SizedBox(width: 20),
                     SizedBox(
                       child: HumidityBarIndicator(humidity: humidity),
                     ),

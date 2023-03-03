@@ -1,4 +1,5 @@
 export 'accelerometer_card.dart';
+export 'altitude_card.dart';
 export 'gyroscope_card.dart';
 export 'humidity_card.dart';
 export 'pressure_card.dart';
