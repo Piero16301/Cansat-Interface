@@ -1,14 +1,17 @@
 import 'package:bloc/bloc.dart';
 import 'package:ditredi/ditredi.dart';
 import 'package:equatable/equatable.dart';
+import 'package:hive/hive.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 part 'metrics_state.dart';
 
 class MetricsCubit extends Cubit<MetricsState> {
-  MetricsCubit(this._preferences) : super(const MetricsState());
+  MetricsCubit(this._preferences, this._collection)
+      : super(const MetricsState());
 
   final SharedPreferences _preferences;
+  final BoxCollection _collection;
 
   void initializeConnection() {
     emit(
@@ -34,10 +37,39 @@ class MetricsCubit extends Cubit<MetricsState> {
     }
   }
 
-  void toggleReading({required bool value}) {
+  Future<void> toggleReading({required bool value}) async {
+    // Cuando se detiene, guardar mediciones de sensores en Hive
+    if (!value) {
+      final metricsBox = await _collection.openBox<Map<dynamic, dynamic>>(
+        'metrics',
+      );
+      final metricsKeys = await metricsBox.getAllKeys();
+      final lastKey = metricsKeys.isNotEmpty ? int.parse(metricsKeys.last) : 0;
+
+      await metricsBox.put(
+        (lastKey + 1).toString(),
+        {
+          'start': state.timeMarker!.toIso8601String(),
+          'end': DateTime.now().toIso8601String(),
+          'humidity': state.humidityData,
+          'pressure': state.pressureData,
+          'temperature': state.temperatureData,
+          'gyroscopeX': state.gyroscopeDataX,
+          'gyroscopeY': state.gyroscopeDataY,
+          'gyroscopeZ': state.gyroscopeDataZ,
+          'accelerationX': state.accelerationDataX,
+          'accelerationY': state.accelerationDataY,
+          'accelerationZ': state.accelerationDataZ,
+          'altitude': state.altitudeData,
+        },
+      );
+    }
+
+    // Limpiar datos de sensores
     emit(
       state.copyWith(
         isReading: value,
+        timeMarker: value ? DateTime.now() : state.timeMarker,
         humidity: value ? 0 : state.humidity,
         humidityData: value ? [] : state.humidityData,
         pressure: value ? 0 : state.pressure,

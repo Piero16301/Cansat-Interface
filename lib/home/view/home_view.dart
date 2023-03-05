@@ -4,15 +4,18 @@ import 'package:cansat_interface/metrics/metrics.dart';
 import 'package:cansat_interface/settings/settings.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive/hive.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({
     required this.preferences,
+    required this.collection,
     super.key,
   });
 
   final SharedPreferences preferences;
+  final BoxCollection collection;
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +70,10 @@ class HomeView extends StatelessWidget {
           PaneItem(
             icon: const Icon(FluentIcons.stacked_line_chart),
             title: const Text('Métricas'),
-            body: MetricsPage(preferences: preferences),
+            body: MetricsPage(
+              preferences: preferences,
+              collection: collection,
+            ),
           ),
         ],
         footerItems: [

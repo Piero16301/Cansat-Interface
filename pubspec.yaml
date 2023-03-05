@@ -18,6 +18,7 @@ dependencies:
   flutter_bloc: ^8.1.2
   flutter_localizations:
     sdk: flutter
+  hive: ^2.2.3
   intl: ^0.17.0
   mqtt_client: ^9.7.4
   shared_preferences: ^2.0.17

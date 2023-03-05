@@ -86,10 +86,10 @@ class _MetricsViewState extends State<MetricsView> {
             right: 10,
             child: ToggleButton(
               checked: state.isReading,
-              onChanged: (value) {
-                context.read<MetricsCubit>().toggleReading(value: value);
+              onChanged: (value) async {
+                await context.read<MetricsCubit>().toggleReading(value: value);
                 if (!state.isReading) {
-                  connectMQTT(
+                  await connectMQTT(
                     broker: state.broker,
                     clientID: state.clientID,
                     port: state.port,

@@ -17,6 +17,7 @@ class MetricsState extends Equatable {
     this.status = MetricsStatus.initial,
     this.faces = const <Face3D>[],
     this.isReading = false,
+    this.timeMarker,
     this.humidity = 0,
     this.humidityData = const <double>[],
     this.pressure = 0,
@@ -46,6 +47,7 @@ class MetricsState extends Equatable {
   final MetricsStatus status;
   final List<Face3D> faces;
   final bool isReading;
+  final DateTime? timeMarker;
 
   // Sensor BME280
   final double humidity;
@@ -81,6 +83,7 @@ class MetricsState extends Equatable {
     MetricsStatus? status,
     List<Face3D>? faces,
     bool? isReading,
+    DateTime? timeMarker,
     double? humidity,
     List<double>? humidityData,
     double? pressure,
@@ -110,6 +113,7 @@ class MetricsState extends Equatable {
       status: status ?? this.status,
       faces: faces ?? this.faces,
       isReading: isReading ?? this.isReading,
+      timeMarker: timeMarker ?? this.timeMarker,
       humidity: humidity ?? this.humidity,
       humidityData: humidityData ?? this.humidityData,
       pressure: pressure ?? this.pressure,
@@ -138,10 +142,11 @@ class MetricsState extends Equatable {
   }
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
         status,
         faces,
         isReading,
+        timeMarker,
         humidity,
         humidityData,
         pressure,
