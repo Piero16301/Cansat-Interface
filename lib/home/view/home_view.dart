@@ -1,3 +1,4 @@
+import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:cansat_interface/home/home.dart';
 import 'package:cansat_interface/metrics/metrics.dart';
 import 'package:cansat_interface/settings/settings.dart';
@@ -15,6 +16,14 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final buttonColors = WindowButtonColors(
+      iconNormal: Colors.white,
+      mouseOver: Colors.white.withOpacity(0.5),
+      mouseDown: Colors.white.withOpacity(0.5),
+      iconMouseOver: Colors.black,
+      iconMouseDown: Colors.black,
+    );
+
     return NavigationView(
       appBar: NavigationAppBar(
         title: DefaultTextStyle(
@@ -33,6 +42,20 @@ class HomeView extends StatelessWidget {
           ),
         ),
         automaticallyImplyLeading: false,
+        actions: WindowTitleBarBox(
+          child: Row(
+            children: [
+              Expanded(child: Container()),
+              Row(
+                children: [
+                  MinimizeWindowButton(colors: buttonColors),
+                  MaximizeWindowButton(colors: buttonColors),
+                  CloseWindowButton(colors: buttonColors),
+                ],
+              ),
+            ],
+          ),
+        ),
       ),
       pane: NavigationPane(
         displayMode: PaneDisplayMode.minimal,

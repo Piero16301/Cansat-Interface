@@ -8,6 +8,7 @@ environment:
   flutter: 3.7.3
 
 dependencies:
+  bitsdojo_window: ^0.1.5
   bloc: ^8.1.1
   ditredi: ^1.0.3
   equatable: ^2.0.5
@@ -58,10 +59,6 @@ flutter:
 flutter_icons:
   android: false
   ios: false
-  web:
-    generate: true
-    image_path: "assets/cansat_logo.png"
-    icon_size: 256
   windows:
     generate: true
     image_path: "assets/cansat_logo.png"
