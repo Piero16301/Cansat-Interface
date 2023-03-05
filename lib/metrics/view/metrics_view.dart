@@ -6,7 +6,6 @@ import 'package:cansat_interface/metrics/metrics.dart';
 import 'package:ditredi/ditredi.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_libserialport/flutter_libserialport.dart';
 import 'package:mqtt_client/mqtt_client.dart' as mqtt;
 import 'package:mqtt_client/mqtt_server_client.dart';
 
@@ -21,10 +20,6 @@ class _MetricsViewState extends State<MetricsView> {
   MqttServerClient? client;
   mqtt.MqttConnectionState? connectionState;
   StreamSubscription? mqttSubscription;
-
-  SerialPort? port;
-  SerialPortReader? reader;
-  StreamSubscription? serialSubscription;
 
   int metricsLength = 20;
 
@@ -94,7 +89,6 @@ class _MetricsViewState extends State<MetricsView> {
               onChanged: (value) {
                 context.read<MetricsCubit>().toggleReading(value: value);
                 if (!state.isReading) {
-                  disconnectMQTT();
                   connectMQTT(
                     broker: state.broker,
                     clientID: state.clientID,
@@ -141,11 +135,6 @@ class _MetricsViewState extends State<MetricsView> {
       if (mqttSubscription != null) {
         await mqttSubscription!.cancel();
         mqttSubscription = null;
-      }
-
-      if (serialSubscription != null) {
-        await serialSubscription!.cancel();
-        serialSubscription = null;
       }
 
       client = MqttServerClient(broker, clientID);
