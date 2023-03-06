@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
 
-import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/widgets.dart';
 
@@ -29,17 +28,7 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
   Bloc.observer = const AppBlocObserver();
 
   await runZonedGuarded(
-    () async {
-      runApp(await builder());
-
-      doWhenWindowReady(() {
-        const initialSize = Size(1280, 720);
-        appWindow.minSize = initialSize;
-        appWindow.size = initialSize;
-        appWindow.alignment = Alignment.center;
-        appWindow.show();
-      });
-    },
+    () async => runApp(await builder()),
     (error, stackTrace) => log(error.toString(), stackTrace: stackTrace),
   );
 }
