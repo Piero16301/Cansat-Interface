@@ -14,7 +14,7 @@ class HistoryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => HistoryCubit(),
+      create: (_) => HistoryCubit(collection),
       child: const HistoryView(),
     );
   }

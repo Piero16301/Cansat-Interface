@@ -15,20 +15,25 @@ enum HistoryStatus {
 class HistoryState extends Equatable {
   const HistoryState({
     this.historyStatus = HistoryStatus.initial,
+    this.historyList = const <History>[],
   });
 
   final HistoryStatus historyStatus;
+  final List<History> historyList;
 
   HistoryState copyWith({
     HistoryStatus? historyStatus,
+    List<History>? historyList,
   }) {
     return HistoryState(
       historyStatus: historyStatus ?? this.historyStatus,
+      historyList: historyList ?? this.historyList,
     );
   }
 
   @override
   List<Object> get props => [
         historyStatus,
+        historyList,
       ];
 }
