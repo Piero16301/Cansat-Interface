@@ -80,7 +80,7 @@ msix_config:
   publisher_display_name: Piero Angelo Morales Alcalde
   identity_name: 29622PieroAngeloMoralesAl.CANSATInterface
   publisher: CN=91BE0923-E8F6-4F62-AE9E-2A123C9AC1AF
-  msix_version: 1.8.0.0
+  msix_version: 1.9.0.0
   languages: es-es
   logo_path: assets/cansat_logo.png
   capabilities: internetClient
