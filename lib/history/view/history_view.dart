@@ -64,67 +64,93 @@ class HistoryItemCard extends StatelessWidget {
         margin: const EdgeInsets.symmetric(vertical: 10),
         child: Row(
           children: [
+            Column(
+              children: [
+                const Text(
+                  'Set',
+                  style: TextStyle(
+                    fontFamily: 'Roboto-Medium',
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                  ),
+                ),
+                Text(
+                  '${index + 1}',
+                  style: const TextStyle(
+                    fontFamily: 'Roboto-Medium',
+                    fontSize: 12,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(width: 10),
             Expanded(
               child: Row(
                 children: [
                   Expanded(
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Text(
                           'Inicio',
                           style: TextStyle(
                             fontFamily: 'Roboto-Medium',
                             fontWeight: FontWeight.bold,
-                            fontSize: 16,
+                            fontSize: 14,
                           ),
                         ),
                         const SizedBox(height: 5),
                         Text(
                           DateFormat('dd-MM-yyyy HH:mm:ss')
                               .format(historyItem.start),
-                          style: const TextStyle(fontFamily: 'Roboto-Medium'),
+                          style: const TextStyle(
+                            fontFamily: 'Roboto-Medium',
+                            fontSize: 12,
+                          ),
                         ),
                       ],
                     ),
                   ),
                   Expanded(
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Text(
                           'Fin',
                           style: TextStyle(
                             fontFamily: 'Roboto-Medium',
                             fontWeight: FontWeight.bold,
-                            fontSize: 16,
+                            fontSize: 14,
                           ),
                         ),
                         const SizedBox(height: 5),
                         Text(
                           DateFormat('dd-MM-yyyy HH:mm:ss')
                               .format(historyItem.end),
-                          style: const TextStyle(fontFamily: 'Roboto-Medium'),
+                          style: const TextStyle(
+                            fontFamily: 'Roboto-Medium',
+                            fontSize: 12,
+                          ),
                         ),
                       ],
                     ),
                   ),
                   Expanded(
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Text(
                           'Registros',
                           style: TextStyle(
                             fontFamily: 'Roboto-Medium',
                             fontWeight: FontWeight.bold,
-                            fontSize: 16,
+                            fontSize: 14,
                           ),
                         ),
                         const SizedBox(height: 5),
                         Text(
                           '${historyItem.humidity.length}',
-                          style: const TextStyle(fontFamily: 'Roboto-Medium'),
+                          style: const TextStyle(
+                            fontFamily: 'Roboto-Medium',
+                            fontSize: 12,
+                          ),
                         ),
                       ],
                     ),
@@ -134,12 +160,12 @@ class HistoryItemCard extends StatelessWidget {
             ),
             FilledButton(
               child: const Text(
-                'Guardar\ncomo CSV',
+                'Guardar\ncomo Excel',
                 style: TextStyle(fontFamily: 'Roboto-Medium'),
               ),
               onPressed: () => context
                   .read<HistoryCubit>()
-                  .exportHistoryItemToCSV(historyItem, index),
+                  .exportHistoryItemToExcel(historyItem, index + 1),
             ),
           ],
         ),
