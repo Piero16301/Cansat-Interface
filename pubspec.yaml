@@ -24,7 +24,7 @@ dependencies:
   mqtt_client: ^9.7.4
   path_provider: ^2.0.13
   shared_preferences: ^2.0.17
-  syncfusion_flutter_charts: ^20.4.50
+  syncfusion_flutter_charts: ^20.4.53
   syncfusion_flutter_core: ^20.4.50
   syncfusion_flutter_gauges: ^20.4.50
   vector_math: ^2.1.4
