@@ -1,4 +1,5 @@
 import 'package:cansat_interface/history/history.dart';
+import 'package:ditredi/ditredi.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -10,35 +11,61 @@ class HistoryView extends StatelessWidget {
   Widget build(BuildContext context) {
     context.read<HistoryCubit>().getHistory();
 
-    return BlocBuilder<HistoryCubit, HistoryState>(
+    return BlocConsumer<HistoryCubit, HistoryState>(
+      listener: (context, state) {
+        if (state.savingIndex != -1) {
+          displayInfoBar(
+            context,
+            builder: (context, close) => InfoBar(
+              title: const Text('Datos exportados'),
+              content:
+                  Text('Box ${state.savingIndex + 1} guardado en Descargas'),
+              action: IconButton(
+                icon: const Icon(FluentIcons.clear),
+                onPressed: close,
+              ),
+              severity: InfoBarSeverity.success,
+            ),
+          );
+          context.read<HistoryCubit>().resetSavingIndex();
+        }
+      },
       builder: (context, state) {
         if (state.historyStatus.isLoading) {
           return const Center(
             child: ProgressRing(),
           );
         } else if (state.historyStatus.isSuccess) {
+          if (state.historyList.isEmpty) {
+            return const Center(
+              child: Text(
+                'No hay datos en el historial',
+                style: TextStyle(fontFamily: 'Roboto-Medium'),
+              ),
+            );
+          }
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-            child: ListView.builder(
-              physics: const BouncingScrollPhysics(),
-              itemCount: state.historyList.length,
-              itemBuilder: (context, index) {
-                return HistoryItemCard(
-                  historyItem: state.historyList[index],
-                  index: index,
-                );
-              },
+            child: SingleChildScrollView(
+              child: Column(
+                children: state.historyList
+                    .mapIndexed(
+                      (e, i) => HistoryItemCard(
+                        historyItem: e,
+                        index: i,
+                      ),
+                    )
+                    .toList(),
+              ),
             ),
           );
-        } else if (state.historyStatus.isFailure) {
+        } else {
           return const Center(
             child: Text(
               'Error al cargar el historial',
               style: TextStyle(fontFamily: 'Roboto-Medium'),
             ),
           );
-        } else {
-          return const SizedBox.shrink();
         }
       },
     );
@@ -159,13 +186,13 @@ class HistoryItemCard extends StatelessWidget {
               ),
             ),
             FilledButton(
+              onPressed: () => context
+                  .read<HistoryCubit>()
+                  .exportHistoryItemToExcel(historyItem, index),
               child: const Text(
                 'Guardar\ncomo Excel',
                 style: TextStyle(fontFamily: 'Roboto-Medium'),
               ),
-              onPressed: () => context
-                  .read<HistoryCubit>()
-                  .exportHistoryItemToExcel(historyItem, index + 1),
             ),
           ],
         ),

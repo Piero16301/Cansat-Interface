@@ -33,86 +33,111 @@ class HistoryCubit extends Cubit<HistoryState> {
     }
   }
 
+  void resetSavingIndex() {
+    emit(state.copyWith(savingIndex: -1));
+  }
+
   Future<void> exportHistoryItemToExcel(History historyItem, int index) async {
-    final headerRow = <String>[
-      'Fecha',
-      'Hora',
-      'Humedad',
-      'Presión',
-      'Temperatura',
-      'Giroscopio X',
-      'Giroscopio Y',
-      'Giroscopio Z',
-      'Aceleración X',
-      'Aceleración Y',
-      'Aceleración Z',
-      'Altitud',
-    ];
+    emit(
+      state.copyWith(
+        savingIndex: index,
+      ),
+    );
 
-    final timeInterval = historyItem.end.difference(historyItem.start);
+    try {
+      final headerRow = <String>[
+        'Fecha',
+        'Hora',
+        'Humedad',
+        'Presión',
+        'Temperatura',
+        'Giroscopio X',
+        'Giroscopio Y',
+        'Giroscopio Z',
+        'Aceleración X',
+        'Aceleración Y',
+        'Aceleración Z',
+        'Altitud',
+      ];
 
-    final listOfListOfStrings = <List<dynamic>>[];
-    for (var i = 0; i < historyItem.humidity.length; i++) {
-      listOfListOfStrings.add([
-        historyItem.start
-            .add(
-              Duration(
-                milliseconds: (timeInterval.inMilliseconds /
-                        historyItem.humidity.length *
-                        i)
-                    .round(),
-              ),
-            )
-            .toIso8601String()
-            .substring(0, 10),
-        historyItem.start
-            .add(
-              Duration(
-                milliseconds: (timeInterval.inMilliseconds /
-                        historyItem.humidity.length *
-                        i)
-                    .round(),
-              ),
-            )
-            .toIso8601String()
-            .substring(11, 19),
-        historyItem.humidity[i],
-        historyItem.pressure[i],
-        historyItem.temperature[i],
-        historyItem.gyroscopeX[i],
-        historyItem.gyroscopeY[i],
-        historyItem.gyroscopeZ[i],
-        historyItem.accelerationX[i],
-        historyItem.accelerationY[i],
-        historyItem.accelerationZ[i],
-        historyItem.altitude[i],
-      ]);
-    }
+      final timeInterval = historyItem.end.difference(historyItem.start);
 
-    // Construir el archivo Excel
-    final excel = Excel.createExcel()..rename('Sheet1', 'Set-$index');
-    final sheetObject = excel['Set-$index']..insertRowIterables(headerRow, 0);
-    final headerStyle = CellStyle(fontSize: 11, bold: true);
-    final cellStyle = CellStyle(fontSize: 11);
-    for (var i = 0; i < headerRow.length; i++) {
-      sheetObject
-          .cell(CellIndex.indexByColumnRow(columnIndex: i, rowIndex: 0))
-          .cellStyle = headerStyle;
-    }
-    for (var i = 0; i < listOfListOfStrings.length; i++) {
-      sheetObject.insertRowIterables(listOfListOfStrings[i], i + 1);
-      for (var j = 0; j < listOfListOfStrings[i].length; j++) {
-        sheetObject
-            .cell(CellIndex.indexByColumnRow(columnIndex: j, rowIndex: i + 1))
-            .cellStyle = cellStyle;
+      final listOfListOfStrings = <List<dynamic>>[];
+      for (var i = 0; i < historyItem.humidity.length; i++) {
+        listOfListOfStrings.add([
+          historyItem.start
+              .add(
+                Duration(
+                  milliseconds: (timeInterval.inMilliseconds /
+                          historyItem.humidity.length *
+                          i)
+                      .round(),
+                ),
+              )
+              .toIso8601String()
+              .substring(0, 10),
+          historyItem.start
+              .add(
+                Duration(
+                  milliseconds: (timeInterval.inMilliseconds /
+                          historyItem.humidity.length *
+                          i)
+                      .round(),
+                ),
+              )
+              .toIso8601String()
+              .substring(11, 19),
+          historyItem.humidity[i],
+          historyItem.pressure[i],
+          historyItem.temperature[i],
+          historyItem.gyroscopeX[i],
+          historyItem.gyroscopeY[i],
+          historyItem.gyroscopeZ[i],
+          historyItem.accelerationX[i],
+          historyItem.accelerationY[i],
+          historyItem.accelerationZ[i],
+          historyItem.altitude[i],
+        ]);
       }
-    }
 
-    // Guardar el archivo Excel
-    final excelBytes = excel.encode();
-    final appDocDir = await getDownloadsDirectory();
-    final appDocPath = appDocDir!.path;
-    final file = File('$appDocPath/set-$index.xlsx');
-    await file.writeAsBytes(excelBytes!);
+      // Construir el archivo Excel
+      final excel = Excel.createExcel()..rename('Sheet1', 'Set-${index + 1}');
+      final sheetObject = excel['Set-${index + 1}']
+        ..insertRowIterables(headerRow, 0);
+      final headerStyle = CellStyle(fontSize: 11, bold: true);
+      final cellStyle = CellStyle(fontSize: 11);
+      for (var i = 0; i < headerRow.length; i++) {
+        sheetObject
+            .cell(CellIndex.indexByColumnRow(columnIndex: i, rowIndex: 0))
+            .cellStyle = headerStyle;
+      }
+      for (var i = 0; i < listOfListOfStrings.length; i++) {
+        sheetObject.insertRowIterables(listOfListOfStrings[i], i + 1);
+        for (var j = 0; j < listOfListOfStrings[i].length; j++) {
+          sheetObject
+              .cell(CellIndex.indexByColumnRow(columnIndex: j, rowIndex: i + 1))
+              .cellStyle = cellStyle;
+        }
+      }
+
+      // Guardar el archivo Excel
+      final excelBytes = excel.encode();
+      final appDocDir = await getDownloadsDirectory();
+      final appDocPath = appDocDir!.path;
+      final file = File('$appDocPath/set-${index + 1}.xlsx');
+      await file.writeAsBytes(excelBytes!);
+
+      emit(
+        state.copyWith(
+          savingIndex: -1,
+        ),
+      );
+    } catch (e) {
+      emit(
+        state.copyWith(
+          savingIndex: -1,
+        ),
+      );
+    }
   }
 }

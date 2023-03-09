@@ -16,18 +16,22 @@ class HistoryState extends Equatable {
   const HistoryState({
     this.historyStatus = HistoryStatus.initial,
     this.historyList = const <History>[],
+    this.savingIndex = -1,
   });
 
   final HistoryStatus historyStatus;
   final List<History> historyList;
+  final int savingIndex;
 
   HistoryState copyWith({
     HistoryStatus? historyStatus,
     List<History>? historyList,
+    int? savingIndex,
   }) {
     return HistoryState(
       historyStatus: historyStatus ?? this.historyStatus,
       historyList: historyList ?? this.historyList,
+      savingIndex: savingIndex ?? this.savingIndex,
     );
   }
 
@@ -35,5 +39,6 @@ class HistoryState extends Equatable {
   List<Object> get props => [
         historyStatus,
         historyList,
+        savingIndex,
       ];
 }
