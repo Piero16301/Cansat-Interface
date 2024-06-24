@@ -9,7 +9,7 @@ environment:
 
 dependencies:
   bloc: ^8.1.1
-  ditredi: ^1.0.3
+  ditredi: ^1.0.4
   equatable: ^2.0.5
   excel: ^2.0.1
   fluent_ui: ^4.3.0
